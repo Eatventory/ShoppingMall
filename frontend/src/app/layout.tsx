@@ -5,7 +5,7 @@ import { CartProvider } from "../contexts/CartContext";
 import { WishlistProvider } from "../contexts/WishlistContext";
 import { OrderProvider } from "../contexts/OrderContext";
 import Navbar from '@/components/Navbar';
-
+import ClientScriptInit from "./ClientScriptInit";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -31,6 +31,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+         <ClientScriptInit /> 
+         {/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         ------해당 컴포넌트 추가-------- */}
 
         <CartProvider>
           <WishlistProvider>
