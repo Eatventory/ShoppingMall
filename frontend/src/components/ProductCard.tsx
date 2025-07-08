@@ -51,7 +51,7 @@ export default function ProductCard({ product, onLike }: ProductCardProps) {
             <span className="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md border border-red-800 mb-1">{product.discount}% 할인</span>
           )}
           {product.freeShipping && (
-            <span className="bg-[#14213d] text-mint-200 text-xs font-bold px-2 py-1 rounded shadow-md border border-mint-400 mb-1">무료배송</span>
+            <span className="bg-[#14213d] text-white text-xs font-bold px-2 py-1 rounded shadow-md border border-mint-400 mb-1">무료배송</span>
           )}
           {product.coupon && (
             <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md border border-emerald-800">쿠폰</span>
