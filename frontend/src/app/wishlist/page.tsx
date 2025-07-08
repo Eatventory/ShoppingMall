@@ -108,13 +108,38 @@ export default function WishlistPage() {
                       )}
                     </div>
                     {/* 찜하기 하트 */}
-                    <button
-                      className="absolute top-2 right-2 z-10 p-1 bg-white/80 rounded-full shadow-md border border-mint-200 hover:scale-110 transition"
-                      onClick={() => handleLike(product.id)}
+                    <div 
+                      className="absolute top-2 right-2 z-10 p-1 bg-white/80 rounded-full shadow-md border border-mint-200 hover:scale-110 transition cursor-pointer"
+                      data-wishlist-button="true"
+                      data-product-id={product.id}
+                      data-product-name={product.name}
+                      data-clickstream-ignore="true"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        
+                        // 클릭스트림 수동 추적
+                        if (window.KlickLab && window.KlickLab.sendEvent) {
+                          window.KlickLab.sendEvent('wishlist_toggle', {
+                            product_id: product.id,
+                            product_name: product.name,
+                            action: 'remove',
+                            timestamp: Date.now()
+                          });
+                        }
+                        handleLike(product.id);
+                      }}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          e.currentTarget.click();
+                        }
+                      }}
                       aria-label="찜하기 해제"
                     >
-                      <AiFillHeart className="w-8 h-8 text-red-400 drop-shadow" />
-                    </button>
+                      <div className="text-red-400 w-8 h-8 drop-shadow flex items-center justify-center text-2xl font-bold">♥</div>
+                    </div>
                   </div>
                   
                   <div className="p-4">

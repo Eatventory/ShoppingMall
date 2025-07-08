@@ -65,10 +65,25 @@ export default function ProductCard({ product, onLike }: ProductCardProps) {
           )}
         </div>
         {/* 찜하기 하트 */}
-        <button
-          className="absolute top-2 right-2 z-10 p-1 bg-white/80 rounded-full shadow-md border border-mint-200 hover:scale-110 transition"
+        <div 
+          className="absolute top-2 right-2 z-10 p-1 bg-white/80 rounded-full shadow-md border border-mint-200 hover:scale-110 transition cursor-pointer"
+          data-wishlist-button="true"
+          data-product-id={product.id}
+          data-product-name={product.name}
+          data-clickstream-ignore="true"
           onClick={(e) => {
             e.stopPropagation();
+            
+            // 클릭스트림 수동 추적
+            if (window.KlickLab && window.KlickLab.sendEvent) {
+              window.KlickLab.sendEvent('wishlist_toggle', {
+                product_id: product.id,
+                product_name: product.name,
+                action: isInWishlist(product.id) ? 'remove' : 'add',
+                timestamp: Date.now()
+              });
+            }
+            
             if (isInWishlist(product.id)) {
               removeFromWishlist(product.id);
             } else {
@@ -89,14 +104,22 @@ export default function ProductCard({ product, onLike }: ProductCardProps) {
             }
             if (onLike) onLike(product.id);
           }}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              e.currentTarget.click();
+            }
+          }}
           aria-label="찜하기"
         >
           {isInWishlist(product.id) ? (
-            <AiFillHeart className="text-red-400 w-8 h-8 drop-shadow" />
+            <div className="text-red-400 w-8 h-8 drop-shadow flex items-center justify-center text-2xl font-bold">♥</div>
           ) : (
-            <AiOutlineHeart className="text-gray-300 w-8 h-8 drop-shadow hover:text-red-400 transition" />
+            <div className="text-gray-300 w-8 h-8 drop-shadow hover:text-red-400 transition flex items-center justify-center text-2xl font-bold">♡</div>
           )}
-        </button>
+        </div>
       </div>
       <div className="p-4">
         <h3 className="text-lg font-medium text-gray-900 mb-2">{product.name}</h3>

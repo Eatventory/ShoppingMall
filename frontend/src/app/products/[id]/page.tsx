@@ -244,6 +244,8 @@ export default function ProductDetail() {
               {/* 찜하기 버튼 */}
               <button
                 className="w-full flex items-center justify-center space-x-2 py-3 px-6 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                data-wishlist-button="true"
+                data-product-id={product.id}
                 onClick={() => {
                   if (isInWishlist(product.id)) {
                     removeFromWishlist(product.id);
