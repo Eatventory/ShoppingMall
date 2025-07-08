@@ -38,19 +38,16 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="text-center">
-          <Link href="/" className="text-3xl font-bold text-gray-900">
-            쇼핑몰
-          </Link>
+          <h2 className="text-3xl font-extrabold text-gray-900">
+            회원가입
+          </h2>
+          <p className="mt-2 text-center text-sm text-gray-600">
+            또는{' '}
+            <Link href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+              로그인
+            </Link>
+          </p>
         </div>
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          회원가입
-        </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
-          또는{' '}
-          <Link href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
-            로그인
-          </Link>
-        </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">

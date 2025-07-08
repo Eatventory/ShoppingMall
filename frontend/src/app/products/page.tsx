@@ -86,11 +86,19 @@ const SUB_CATEGORIES: Record<string, { id: string; name: string }[]> = {
 export default function ProductsPage() {
   const searchParams = useSearchParams();
   const categoryFromNav = searchParams.get('category') || 'all';
+  const searchFromNav = searchParams.get('search') || '';
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [subCategory, setSubCategory] = useState('');
   const [sortBy, setSortBy] = useState('popular');
+
+  // URL에서 검색어를 가져와서 상태에 설정
+  useEffect(() => {
+    if (searchFromNav) {
+      setSearchTerm(searchFromNav);
+    }
+  }, [searchFromNav]);
 
   // 임시 상품 데이터 (나중에 API로 교체)
   const mockProducts: Product[] = [
@@ -183,20 +191,6 @@ export default function ProductsPage() {
       coupon: false,
       liked: false,
       subCategory: 'yoga'
-    },
-    {
-      id: 7,
-      name: "운동화",
-      description: "편안한 착용감의 운동화",
-      price: 89000,
-      image: "/sample4.jpg",
-      category: "clothing",
-      rating: 4.3,
-      reviewCount: 203,
-      freeShipping: true,
-      coupon: false,
-      liked: false,
-      subCategory: 'shoes'
     }
   ];
 
@@ -266,6 +260,18 @@ export default function ProductsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* 검색 결과 표시 */}
+        {searchFromNav && (
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-2">
+              "{searchFromNav}" 검색 결과
+            </h2>
+            <p className="text-gray-600">
+              {sortedProducts.length}개의 상품을 찾았습니다
+            </p>
+          </div>
+        )}
+
         {/* 2차 카테고리 (네비게이션에서 선택된 1차만) */}
         {categoryFromNav !== 'all' && SUB_CATEGORIES[categoryFromNav] && (
           <div className="flex space-x-2 mb-6">
@@ -315,7 +321,9 @@ export default function ProductsPage() {
         </div>
         {sortedProducts.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-gray-500">검색 결과가 없습니다.</p>
+            <p className="text-gray-500">
+              {searchFromNav ? `"${searchFromNav}"에 대한 검색 결과가 없습니다.` : '검색 결과가 없습니다.'}
+            </p>
           </div>
         )}
       </main>
