@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import Link from 'next/link';
 import { useCart } from '../../../contexts/CartContext';
+import { useWishlist, WishlistItem } from '../../../contexts/WishlistContext';
 
 // 임시 상품 데이터 (나중에 API로 교체)
 const mockProducts = {
@@ -110,8 +111,7 @@ export default function ProductDetail() {
   const productId = Number(params.id);
   const product = mockProducts[productId as keyof typeof mockProducts];
   const { addToCart } = useCart();
-
-
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
   // 상품이 없을 경우
   if (!product) {
@@ -129,20 +129,7 @@ export default function ProductDetail() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* 상단 네비게이션 */}
-      <header className="bg-[#14213d] text-white shadow-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
-          <Link href="/" className="text-3xl font-extrabold tracking-tight text-mint-400">
-            NAMAN MARKET
-          </Link>
-          <nav className="flex items-center space-x-6">
-            <Link href="/products" className="hover:text-mint-400 font-semibold">전체상품</Link>
-            <Link href="/cart" className="hover:text-mint-400 font-semibold">장바구니</Link>
-            <Link href="/login" className="hover:text-mint-400 font-semibold">로그인</Link>
-          </nav>
-        </div>
-      </header>
-
+      {/* 상단 네비게이션 삭제됨 */}
       {/* 메인 컨텐츠 */}
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* 브레드크럼 */}
@@ -257,16 +244,33 @@ export default function ProductDetail() {
               <button
                 className="w-full flex items-center justify-center space-x-2 py-3 px-6 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                 onClick={() => {
-                  // TODO: 찜하기 기능 구현
-                  console.log('찜하기:', product.id);
+                  if (isInWishlist(product.id)) {
+                    removeFromWishlist(product.id);
+                  } else {
+                    const wishlistItem = {
+                      id: product.id,
+                      name: product.name,
+                      description: product.description,
+                      price: product.price,
+                      image: product.image,
+                      category: product.category,
+                      rating: product.rating,
+                      reviewCount: product.reviewCount,
+                      freeShipping: product.freeShipping,
+                      coupon: product.coupon,
+                      ...(product.originalPrice !== undefined ? { originalPrice: product.originalPrice } : {}),
+                      ...(product.discount !== undefined ? { discount: product.discount } : {})
+                    } as WishlistItem;
+                    addToWishlist(wishlistItem);
+                  }
                 }}
               >
-                {product.liked ? (
+                {isInWishlist(product.id) ? (
                   <AiFillHeart className="text-red-500 w-5 h-5" />
                 ) : (
                   <AiOutlineHeart className="text-gray-400 w-5 h-5" />
                 )}
-                <span>{product.liked ? '찜 완료' : '찜하기'}</span>
+                <span>{isInWishlist(product.id) ? '찜 완료' : '찜하기'}</span>
               </button>
 
               {/* 장바구니 담기 버튼 */}

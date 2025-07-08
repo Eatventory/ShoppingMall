@@ -22,7 +22,7 @@ export default function Navbar() {
         </div>
         {/* 네비게이션 */}
         <nav className="flex items-center space-x-6">
-          <Link href="/products" className={`hover:text-mint-400 font-semibold${pathname.startsWith('/products') ? ' text-mint-400' : ''}`}>전체상품</Link>
+          <Link href="/wishlist" className={`hover:text-mint-400 font-semibold${pathname.startsWith('/wishlist') ? ' text-mint-400' : ''}`}>찜한상품</Link>
           <Link href="/cart" className={`hover:text-mint-400 font-semibold${pathname.startsWith('/cart') ? ' text-mint-400' : ''}`}>장바구니</Link>
           <Link href="/login" className={`hover:text-mint-400 font-semibold${pathname.startsWith('/login') ? ' text-mint-400' : ''}`}>로그인</Link>
           <Link href="/register" className={`hover:text-mint-400 font-semibold${pathname.startsWith('/register') ? ' text-mint-400' : ''}`}>회원가입</Link>

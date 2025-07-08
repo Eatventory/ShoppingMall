@@ -7,18 +7,8 @@ import 'swiper/css';
 import ProductCard from '../components/ProductCard';
 
 export default function Home() {
-  const [likedProducts, setLikedProducts] = useState<Set<number>>(new Set());
-
   const handleLike = (productId: number) => {
-    setLikedProducts(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(productId)) {
-        newSet.delete(productId);
-      } else {
-        newSet.add(productId);
-      }
-      return newSet;
-    });
+    // WishlistContext에서 자동으로 처리됨
   };
 
   return (
@@ -86,10 +76,7 @@ export default function Home() {
           ].map((product) => (
             <ProductCard 
               key={product.id} 
-              product={{
-                ...product,
-                liked: likedProducts.has(product.id)
-              }} 
+              product={product}
               onLike={handleLike}
             />
           ))}
@@ -108,17 +95,12 @@ export default function Home() {
           ].map((product) => (
             <ProductCard 
               key={product.id} 
-              product={{
-                ...product,
-                liked: likedProducts.has(product.id)
-              }} 
+              product={product}
               onLike={handleLike}
             />
           ))}
         </div>
       </section>
-
-
 
       {/* 이벤트/쿠폰/혜택 섹션 */}
       <section className="max-w-7xl mx-auto px-4 py-12">
