@@ -65,7 +65,7 @@ export default function Home() {
       </section>
 
       {/* 오늘의 특가(타임딜) 섹션 */}
-      <section className="max-w-7xl mx-auto px-4 py-12">
+      <section className="max-w-7xl mx-auto px-4 py-8">
         <h3 className="text-2xl font-bold text-[#14213d] mb-6">오늘의 특가</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           {[
@@ -84,7 +84,7 @@ export default function Home() {
       </section>
 
       {/* 베스트 상품 섹션 */}
-      <section className="max-w-7xl mx-auto px-4 py-12">
+      <section className="max-w-7xl mx-auto px-4 py-8">
         <h3 className="text-2xl font-bold text-[#14213d] mb-6">베스트 상품</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           {[
@@ -103,7 +103,7 @@ export default function Home() {
       </section>
 
       {/* 이벤트/쿠폰/혜택 섹션 */}
-      <section className="max-w-7xl mx-auto px-4 py-12">
+      <section className="max-w-7xl mx-auto px-4 py-8">
         <h3 className="text-2xl font-bold text-[#14213d] mb-6">이벤트 · 쿠폰 · 혜택</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           <div 
