@@ -2,6 +2,7 @@ import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useWishlist } from '../contexts/WishlistContext';
+import { useCart } from '../contexts/CartContext';
 
 export interface ProductCardProps {
   product: {
@@ -25,6 +26,7 @@ export interface ProductCardProps {
 export default function ProductCard({ product, onLike }: ProductCardProps) {
   const router = useRouter();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const { addToCart } = useCart();
 
   const handleProductClick = (e: React.MouseEvent) => {
     // 찜하기 버튼이나 장바구니 버튼 클릭 시에는 상품 상세로 이동하지 않음
@@ -132,7 +134,21 @@ export default function ProductCard({ product, onLike }: ProductCardProps) {
               {product.price.toLocaleString()}원
             </span>
           </div>
-          <button className="bg-mint-400 text-[#14213d] px-4 py-2 rounded-md text-sm font-medium hover:bg-mint-300 transition-colors">
+          <button 
+            className="bg-mint-400 text-[#14213d] px-4 py-2 rounded-md text-sm font-medium hover:bg-mint-300 transition-colors"
+            onClick={(e) => {
+              e.stopPropagation();
+              addToCart({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                originalPrice: product.originalPrice,
+                image: product.image,
+                discount: product.discount
+              });
+              alert(`${product.name}이(가) 장바구니에 추가되었습니다!`);
+            }}
+          >
             장바구니
           </button>
         </div>
