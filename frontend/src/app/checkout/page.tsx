@@ -44,6 +44,7 @@ export default function CheckoutPage() {
   });
 
   const [isProcessing, setIsProcessing] = useState(false);
+  const [showPaymentSuccess, setShowPaymentSuccess] = useState(false);
 
   // 장바구니가 비어있으면 홈으로 리다이렉트
   if (cartItems.length === 0) {
@@ -115,9 +116,14 @@ export default function CheckoutPage() {
       // TODO: 결제 시작 이벤트 트래킹 구현
       console.log('결제 시작:', { cartItems, total, paymentMethod: paymentInfo.method });
 
-      // 결제 성공 시 장바구니 비우고 성공 페이지로 이동
+      // 결제 성공 시 장바구니 비우고 팝업 표시
       clearCart();
-      router.push('/checkout/success');
+      setShowPaymentSuccess(true);
+      
+      // 3초 후 성공 페이지로 이동
+      setTimeout(() => {
+        router.push('/checkout/success');
+      }, 3000);
     } catch (error) {
       console.error('결제 처리 중 오류 발생:', error);
       alert('결제 처리 중 오류가 발생했습니다. 다시 시도해주세요.');
@@ -379,6 +385,35 @@ export default function CheckoutPage() {
           </div>
         </div>
       </main>
+
+      {/* 결제 완료 팝업 */}
+      {showPaymentSuccess && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4 text-center">
+            <div className="mb-4">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">결제가 완료되었습니다!</h3>
+              <p className="text-gray-600 mb-4">
+                주문이 성공적으로 처리되었습니다.<br />
+                주문 내역은 주문조회에서 확인하실 수 있습니다.
+              </p>
+              <div className="text-sm text-gray-500">
+                잠시 후 주문 완료 페이지로 이동합니다...
+              </div>
+            </div>
+            <button
+              onClick={() => router.push('/checkout/success')}
+              className="w-full bg-[#14213d] text-white py-2 px-4 rounded-md font-medium hover:bg-[#1a2540] transition-colors"
+            >
+              바로 이동하기
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 } 

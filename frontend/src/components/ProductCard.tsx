@@ -1,6 +1,8 @@
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import { BsCartPlus } from 'react-icons/bs';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useWishlist } from '../contexts/WishlistContext';
 import { useCart } from '../contexts/CartContext';
 
@@ -27,6 +29,7 @@ export default function ProductCard({ product, onLike }: ProductCardProps) {
   const router = useRouter();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const { addToCart } = useCart();
+  const [showCartSuccess, setShowCartSuccess] = useState(false);
 
   const handleProductClick = (e: React.MouseEvent) => {
     // 찜하기 버튼이나 장바구니 버튼 클릭 시에는 상품 상세로 이동하지 않음
@@ -89,9 +92,9 @@ export default function ProductCard({ product, onLike }: ProductCardProps) {
           aria-label="찜하기"
         >
           {isInWishlist(product.id) ? (
-            <AiFillHeart className="text-mint-400 w-8 h-8 drop-shadow" />
+            <AiFillHeart className="text-red-400 w-8 h-8 drop-shadow" />
           ) : (
-            <AiOutlineHeart className="text-gray-300 w-8 h-8 drop-shadow hover:text-mint-400 transition" />
+            <AiOutlineHeart className="text-gray-300 w-8 h-8 drop-shadow hover:text-red-400 transition" />
           )}
         </button>
       </div>
@@ -135,7 +138,7 @@ export default function ProductCard({ product, onLike }: ProductCardProps) {
             </span>
           </div>
           <button 
-            className="bg-mint-400 text-[#14213d] px-4 py-2 rounded-md text-sm font-medium hover:bg-mint-300 transition-colors"
+            className="px-4 py-2 bg-white border border-gray-300 text-mint-400 rounded-md hover:bg-mint-400 hover:text-white transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center"
             onClick={(e) => {
               e.stopPropagation();
               addToCart({
@@ -146,13 +149,48 @@ export default function ProductCard({ product, onLike }: ProductCardProps) {
                 image: product.image,
                 discount: product.discount
               });
-              alert(`${product.name}이(가) 장바구니에 추가되었습니다!`);
+              setShowCartSuccess(true);
             }}
+            aria-label="장바구니에 추가"
           >
-            장바구니
+            <BsCartPlus className="w-5 h-5" />
           </button>
         </div>
       </div>
+
+      {/* 장바구니 추가 성공 팝업 */}
+      {showCartSuccess && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4 text-center">
+            <div className="mb-4">
+              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">장바구니에 추가되었습니다!</h3>
+              <p className="text-sm text-gray-600">
+                {product.name}
+              </p>
+            </div>
+            <div className="flex space-x-3">
+              <button
+                onClick={() => setShowCartSuccess(false)}
+                className="flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-md text-sm font-medium hover:bg-gray-300 transition-colors"
+              >
+                계속 쇼핑
+              </button>
+              <Link
+                href="/cart"
+                onClick={() => setShowCartSuccess(false)}
+                className="flex-1 bg-[#14213d] text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-[#1a2540] transition-colors"
+              >
+                장바구니 보기
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 } 
