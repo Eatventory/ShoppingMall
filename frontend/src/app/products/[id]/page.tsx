@@ -1,6 +1,6 @@
 'use client';
 import { useParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import Link from 'next/link';
 import { useCart } from '../../../contexts/CartContext';
@@ -112,6 +112,7 @@ export default function ProductDetail() {
   const product = mockProducts[productId as keyof typeof mockProducts];
   const { addToCart } = useCart();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const [showCartSuccess, setShowCartSuccess] = useState(false);
 
   // 상품이 없을 경우
   if (!product) {
@@ -216,7 +217,7 @@ export default function ProductDetail() {
             {/* 뱃지들 */}
             <div className="flex flex-wrap gap-2">
               {product.freeShipping && (
-                <span className="bg-[#14213d] text-mint-200 text-sm font-bold px-3 py-1 rounded-full">
+                <span className="bg-[#14213d] text-white text-sm font-bold px-3 py-1 rounded-full">
                   무료배송
                 </span>
               )}
@@ -275,40 +276,75 @@ export default function ProductDetail() {
 
               {/* 장바구니 담기 버튼 */}
               <button
-                className="w-full bg-mint-400 text-[#14213d] py-3 px-6 rounded-lg font-semibold hover:bg-mint-300 transition-colors"
+                className="w-full flex items-center justify-center space-x-2 py-3 px-6 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                 onClick={() => {
                   // 실제 장바구니에 추가
-                  addToCart({
+                  const cartItem: any = {
                     id: product.id,
                     name: product.name,
                     price: product.price,
-                    originalPrice: 'originalPrice' in product ? product.originalPrice : undefined,
-                    image: product.image,
-                    discount: 'discount' in product ? product.discount : undefined
-                  });
+                    image: product.image
+                  };
                   
-                  // 성공 메시지
-                  alert('장바구니에 추가되었습니다!');
+                  // 선택적 속성들 추가
+                  if ('originalPrice' in product) {
+                    cartItem.originalPrice = product.originalPrice;
+                  }
+                  if ('discount' in product) {
+                    cartItem.discount = product.discount;
+                  }
+                  
+                  addToCart(cartItem);
+                  
+                  // 성공 팝업 표시
+                  setShowCartSuccess(true);
                 }}
               >
-                장바구니 담기
+                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
+                </svg>
+                <span>장바구니 담기</span>
               </button>
 
-              {/* 지금 구매 버튼 */}
-              <button
-                className="w-full bg-[#14213d] text-white py-3 px-6 rounded-lg font-semibold hover:bg-[#1a2540] transition-colors"
-                onClick={() => {
-                  // TODO: 바로 구매 기능 구현
-                  console.log('바로 구매:', product.id);
-                  alert('바로 구매 기능은 준비 중입니다.');
-                }}
-              >
-                지금 구매
-              </button>
+
             </div>
           </div>
         </div>
       </div>
+
+      {/* 장바구니 추가 성공 팝업 */}
+      {showCartSuccess && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4 text-center">
+            <div className="mb-4">
+              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">장바구니에 추가되었습니다!</h3>
+              <p className="text-sm text-gray-600">
+                {product.name}
+              </p>
+            </div>
+            <div className="flex space-x-3">
+              <button
+                onClick={() => setShowCartSuccess(false)}
+                className="flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-md text-sm font-medium hover:bg-gray-300 transition-colors"
+              >
+                계속 쇼핑
+              </button>
+              <Link
+                href="/cart"
+                onClick={() => setShowCartSuccess(false)}
+                className="flex-1 bg-[#14213d] text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-[#1a2540] transition-colors"
+              >
+                장바구니 보기
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 } 
