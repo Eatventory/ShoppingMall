@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import ProductCard from '../../components/ProductCard';
+import { useSearchParams } from 'next/navigation';
 
 interface Product {
   id: number;
@@ -19,13 +20,76 @@ interface Product {
   freeShipping?: boolean;
   coupon?: boolean;
   liked?: boolean;
+  subCategory?: string;
 }
 
+const MAIN_CATEGORIES = [
+  { id: 'electronics', name: '전자제품' },
+  { id: 'clothing', name: '의류' },
+  { id: 'sports', name: '스포츠' },
+  { id: 'appliances', name: '가전제품' },
+  { id: 'food', name: '식품' },
+  { id: 'beauty', name: '뷰티' },
+];
+
+const SUB_CATEGORIES: Record<string, { id: string; name: string }[]> = {
+  electronics: [
+    { id: 'laptop', name: '노트북' },
+    { id: 'desktop', name: '데스크탑' },
+    { id: 'appliance', name: '가전제품' },
+    { id: 'mobile', name: '모바일' },
+    { id: 'camera', name: '카메라' },
+    { id: 'etc', name: '기타' },
+  ],
+  clothing: [
+    { id: 'tshirt', name: '티셔츠' },
+    { id: 'pants', name: '바지' },
+    { id: 'outer', name: '아우터' },
+    { id: 'shoes', name: '신발' },
+    { id: 'cap', name: '모자' },
+    { id: 'etc', name: '기타' },
+  ],
+  sports: [
+    { id: 'yoga', name: '요가' },
+    { id: 'fitness', name: '피트니스' },
+    { id: 'ball', name: '구기종목' },
+    { id: 'cycle', name: '자전거' },
+    { id: 'swim', name: '수영' },
+    { id: 'etc', name: '기타' },
+  ],
+  appliances: [
+    { id: 'coffee', name: '커피머신' },
+    { id: 'cleaner', name: '청소기' },
+    { id: 'aircon', name: '에어컨' },
+    { id: 'fridge', name: '냉장고' },
+    { id: 'tv', name: 'TV' },
+    { id: 'etc', name: '기타' },
+  ],
+  food: [
+    { id: 'fruit', name: '과일' },
+    { id: 'meat', name: '육류' },
+    { id: 'snack', name: '간식' },
+    { id: 'drink', name: '음료' },
+    { id: 'seafood', name: '수산물' },
+    { id: 'etc', name: '기타' },
+  ],
+  beauty: [
+    { id: 'skincare', name: '스킨케어' },
+    { id: 'makeup', name: '메이크업' },
+    { id: 'hair', name: '헤어' },
+    { id: 'body', name: '바디' },
+    { id: 'perfume', name: '향수' },
+    { id: 'etc', name: '기타' },
+  ],
+};
+
 export default function ProductsPage() {
+  const searchParams = useSearchParams();
+  const categoryFromNav = searchParams.get('category') || 'all';
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [subCategory, setSubCategory] = useState('');
   const [sortBy, setSortBy] = useState('popular');
 
   // 임시 상품 데이터 (나중에 API로 교체)
@@ -43,7 +107,8 @@ export default function ProductsPage() {
       discount: 26,
       freeShipping: true,
       coupon: true,
-      liked: true
+      liked: true,
+      subCategory: 'mobile'
     },
     {
       id: 2,
@@ -56,7 +121,8 @@ export default function ProductsPage() {
       reviewCount: 89,
       freeShipping: true,
       coupon: false,
-      liked: false
+      liked: false,
+      subCategory: 'mobile'
     },
     {
       id: 3,
@@ -71,7 +137,8 @@ export default function ProductsPage() {
       discount: 29,
       freeShipping: false,
       coupon: true,
-      liked: false
+      liked: false,
+      subCategory: 'tshirt'
     },
     {
       id: 4,
@@ -79,12 +146,13 @@ export default function ProductsPage() {
       description: "편안한 착용감의 운동화",
       price: 89000,
       image: "/sample4.jpg",
-      category: "sports",
+      category: "clothing",
       rating: 4.3,
       reviewCount: 203,
       freeShipping: true,
       coupon: false,
-      liked: true
+      liked: false,
+      subCategory: 'shoes'
     },
     {
       id: 5,
@@ -99,7 +167,8 @@ export default function ProductsPage() {
       discount: 22,
       freeShipping: false,
       coupon: true,
-      liked: false
+      liked: false,
+      subCategory: 'coffee'
     },
     {
       id: 6,
@@ -112,7 +181,22 @@ export default function ProductsPage() {
       reviewCount: 94,
       freeShipping: true,
       coupon: false,
-      liked: false
+      liked: false,
+      subCategory: 'yoga'
+    },
+    {
+      id: 7,
+      name: "운동화",
+      description: "편안한 착용감의 운동화",
+      price: 89000,
+      image: "/sample4.jpg",
+      category: "clothing",
+      rating: 4.3,
+      reviewCount: 203,
+      freeShipping: true,
+      coupon: false,
+      liked: false,
+      subCategory: 'shoes'
     }
   ];
 
@@ -125,10 +209,11 @@ export default function ProductsPage() {
   }, []);
 
   const filteredProducts = products.filter(product => {
+    const matchesMain = categoryFromNav === 'all' || product.category === categoryFromNav;
+    const matchesSub = !subCategory || (product.subCategory === subCategory);
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          product.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
-    return matchesSearch && matchesCategory;
+    return matchesMain && matchesSub && matchesSearch;
   });
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
@@ -180,93 +265,54 @@ export default function ProductsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* 헤더 */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-gray-900">쇼핑몰</Link>
-            </div>
-            <nav className="flex space-x-8">
-              <Link href="/products" className="text-indigo-600 font-medium">상품</Link>
-              <Link href="/cart" className="text-gray-500 hover:text-gray-900">장바구니</Link>
-              <Link href="/login" className="text-gray-500 hover:text-gray-900">로그인</Link>
-            </nav>
-          </div>
-        </div>
-      </header>
-
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* 검색 및 필터 */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
-            {/* 검색 */}
-            <div className="flex-1 max-w-md">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="상품명을 검색하세요..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                />
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </div>
-              </div>
-            </div>
-
-            {/* 카테고리 필터 */}
-            <div className="flex space-x-2">
-              {categories.map((category) => (
-                <button
-                  key={category.id}
-                  onClick={() => setSelectedCategory(category.id)}
-                  className={`px-4 py-2 rounded-md text-sm font-medium ${
-                    selectedCategory === category.id
-                      ? 'bg-indigo-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  {category.name}
-                </button>
-              ))}
-            </div>
-
-            {/* 정렬 */}
-            <div className="flex items-center space-x-2">
-              <span className="text-sm text-gray-500">정렬:</span>
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500"
+        {/* 2차 카테고리 (네비게이션에서 선택된 1차만) */}
+        {categoryFromNav !== 'all' && SUB_CATEGORIES[categoryFromNav] && (
+          <div className="flex space-x-2 mb-6">
+            <button
+              onClick={() => setSubCategory('')}
+              className={`px-3 py-1 rounded text-xs font-medium border ${subCategory === '' ? 'bg-indigo-500 text-white border-indigo-700' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'}`}
+            >
+              전체
+            </button>
+            {SUB_CATEGORIES[categoryFromNav].map((sub) => (
+              <button
+                key={sub.id}
+                onClick={() => setSubCategory(sub.id)}
+                className={`px-3 py-1 rounded text-xs font-medium border ${subCategory === sub.id ? 'bg-indigo-500 text-white border-indigo-700' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'}`}
               >
-                {sortOptions.map((option) => (
-                  <option key={option.id} value={option.id}>
-                    {option.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+                {sub.name}
+              </button>
+            ))}
           </div>
-        </div>
-
+        )}
         {/* 상품 개수 */}
-        <div className="mb-6">
+        <div className="mb-6 flex items-center justify-between">
           <p className="text-gray-600">
             총 <span className="font-semibold">{sortedProducts.length}</span>개의 상품
           </p>
+          {/* 정렬 */}
+          <div className="flex items-center space-x-2">
+            <span className="text-sm text-gray-500">정렬:</span>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500"
+            >
+              {sortOptions.map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-
         {/* 상품 그리드 */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {sortedProducts.map((product) => (
             <ProductCard key={product.id} product={product} onLike={toggleLike} />
           ))}
         </div>
-
         {sortedProducts.length === 0 && (
           <div className="text-center py-12">
             <p className="text-gray-500">검색 결과가 없습니다.</p>
