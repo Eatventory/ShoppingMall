@@ -30,15 +30,13 @@ router.post('/register', async (req, res) => {
     );
 
     // JWT 토큰 생성
-    const token = jwt.sign(
-      { 
-        id: newUser.rows[0].id, 
-        email: newUser.rows[0].email,
-        role: newUser.rows[0].role 
-      },
-      process.env.JWT_SECRET || 'fallback_secret',
-      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
-    );
+    const jwtSecret = process.env.JWT_SECRET || 'fallback_secret';
+    const payload = { 
+      id: newUser.rows[0].id, 
+      email: newUser.rows[0].email,
+      role: newUser.rows[0].role 
+    };
+    const token = jwt.sign(payload, jwtSecret, { expiresIn: '7d' });
 
     res.status(201).json({
       message: '회원가입이 완료되었습니다.',
@@ -78,15 +76,13 @@ router.post('/login', async (req, res) => {
     }
 
     // JWT 토큰 생성
-    const token = jwt.sign(
-      { 
-        id: user.rows[0].id, 
-        email: user.rows[0].email,
-        role: user.rows[0].role 
-      },
-      process.env.JWT_SECRET || 'fallback_secret',
-      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
-    );
+    const jwtSecret = process.env.JWT_SECRET || 'fallback_secret';
+    const payload = { 
+      id: user.rows[0].id, 
+      email: user.rows[0].email,
+      role: user.rows[0].role 
+    };
+    const token = jwt.sign(payload, jwtSecret, { expiresIn: '7d' });
 
     res.json({
       message: '로그인이 완료되었습니다.',

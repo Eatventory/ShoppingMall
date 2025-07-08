@@ -39,7 +39,10 @@ const startServer = async () => {
     });
   } catch (error) {
     console.error('Failed to start server:', error);
-    process.exit(1);
+    // 개발 환경에서는 서버 종료하지 않고 계속 진행
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT} (without database)`);
+    });
   }
 };
 

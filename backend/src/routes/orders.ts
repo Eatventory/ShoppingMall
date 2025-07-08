@@ -90,7 +90,7 @@ router.post('/', authenticateToken, async (req, res) => {
 
   } catch (error) {
     console.error('Create order error:', error);
-    res.status(500).json({ message: error.message || '서버 오류가 발생했습니다.' });
+    res.status(500).json({ message: (error as Error).message || '서버 오류가 발생했습니다.' });
   }
 });
 

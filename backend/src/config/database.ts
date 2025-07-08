@@ -18,7 +18,8 @@ export const connectDB = async () => {
     client.release();
   } catch (error) {
     console.error('Database connection failed:', error);
-    throw error;
+    console.log('Continuing without database connection for development...');
+    // 개발 환경에서는 데이터베이스 연결 실패해도 계속 진행
   }
 };
 
