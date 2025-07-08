@@ -54,18 +54,18 @@ export default function Navbar() {
         </nav>
       </div>
       {/* 카테고리 바 */}
-      <div className="bg-[#1a2540] text-mint-400 text-sm">
-        <div className="max-w-7xl mx-auto px-4 flex space-x-6 h-10 items-center">
-          <Link href="/products" className="hover:text-white">전체</Link>
-          <Link href="/products?category=electronics" className="hover:text-white">전자제품</Link>
-          <Link href="/products?category=clothing" className="hover:text-white">의류</Link>
-          <Link href="/products?category=appliances" className="hover:text-white">가전제품</Link>
-          <Link href="/products?category=sports" className="hover:text-white">스포츠</Link>
-          <Link href="/products?category=food" className="hover:text-white">식품</Link>
-          <Link href="/products?category=beauty" className="hover:text-white">뷰티</Link>
-          <Link href="/products?category=kids" className="hover:text-white">유아동</Link>
-          <Link href="/products?category=home" className="hover:text-white">홈리빙</Link>
-          <Link href="/products?category=pet" className="hover:text-white">반려동물</Link>
+      <div className="bg-[#1a2540] text-mint-400 text-base">
+        <div className="max-w-7xl mx-auto px-4 flex space-x-6 h-12 items-center">
+          <Link href="/products" className="hover:text-white font-medium">전체</Link>
+          <Link href="/products?category=electronics" className="hover:text-white font-medium">전자제품</Link>
+          <Link href="/products?category=clothing" className="hover:text-white font-medium">의류</Link>
+          <Link href="/products?category=appliances" className="hover:text-white font-medium">가전제품</Link>
+          <Link href="/products?category=sports" className="hover:text-white font-medium">스포츠</Link>
+          <Link href="/products?category=food" className="hover:text-white font-medium">식품</Link>
+          <Link href="/products?category=beauty" className="hover:text-white font-medium">뷰티</Link>
+          <Link href="/products?category=kids" className="hover:text-white font-medium">유아동</Link>
+          <Link href="/products?category=home" className="hover:text-white font-medium">홈리빙</Link>
+          <Link href="/products?category=pet" className="hover:text-white font-medium">반려동물</Link>
         </div>
       </div>
     </header>

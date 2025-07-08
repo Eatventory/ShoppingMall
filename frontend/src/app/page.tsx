@@ -14,49 +14,49 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* 메인 슬라이드 배너 */}
-      <section className="bg-gradient-to-r from-[#14213d] via-[#1a2540] to-mint-400 py-0">
-        <div className="max-w-7xl mx-auto px-4 pt-8 pb-12">
+      <section className="bg-gradient-to-r from-[#14213d] via-[#1a2540] to-mint-400 py-0 h-72">
+        <div className="max-w-7xl mx-auto px-4 pt-6 pb-8 h-full">
           <Swiper
             spaceBetween={24}
             slidesPerView={1}
             loop={true}
             autoplay={{ delay: 3500, disableOnInteraction: false }}
             modules={[Autoplay]}
-            className="rounded-2xl shadow-xl overflow-hidden"
+            className="rounded-2xl shadow-xl overflow-hidden h-64"
           >
             <SwiperSlide>
               <div className="flex flex-col md:flex-row items-center bg-[#14213d]">
-                <div className="text-white md:w-1/2 p-8">
-                  <h2 className="text-4xl md:text-5xl font-extrabold mb-4">여름맞이 쿨특가<br />최대 50% 할인!</h2>
-                  <p className="text-lg mb-6">시원한 여름 상품을 민트 특가로 만나보세요.</p>
-                  <Link href="/products" className="inline-block bg-white text-[#14213d] border-2 border-[#14213d] font-bold px-8 py-3 rounded-full shadow hover:bg-mint-400 hover:text-[#14213d] hover:border-mint-400 transition">특가 상품 보기</Link>
+                <div className="text-white md:w-1/2 p-6">
+                  <h2 className="text-3xl md:text-4xl font-extrabold mb-3">여름맞이 쿨특가<br />최대 50% 할인!</h2>
+                  <p className="text-base mb-4">시원한 여름 상품을 민트 특가로 만나보세요.</p>
+                  <Link href="/products" className="inline-block bg-white text-[#14213d] border-2 border-[#14213d] font-bold px-6 py-2 rounded-full shadow hover:bg-mint-400 hover:text-[#14213d] hover:border-mint-400 transition">특가 상품 보기</Link>
                 </div>
-                <div className="md:w-1/2 flex justify-center p-8">
-                  <img src="/sample1.jpg" alt="여름 특가" className="rounded-2xl w-80 h-80 object-cover border-4 border-mint-400" />
+                <div className="md:w-1/2 flex justify-center p-6">
+                  <img src="/sample1.jpg" alt="여름 특가" className="rounded-2xl w-64 h-64 object-cover border-4 border-mint-400" />
                 </div>
               </div>
             </SwiperSlide>
             <SwiperSlide>
               <div className="flex flex-col md:flex-row items-center bg-[#1a2540]">
-                <div className="text-white md:w-1/2 p-8">
-                  <h2 className="text-4xl md:text-5xl font-extrabold mb-4">신규회원 웰컴쿠폰<br />최대 2만원 증정</h2>
-                  <p className="text-lg mb-6">지금 가입하면 민트 쿠폰팩 즉시 지급!</p>
-                  <Link href="/register" className="inline-block bg-white text-[#1a2540] border-2 border-[#1a2540] font-bold px-8 py-3 rounded-full shadow hover:bg-mint-400 hover:text-[#1a2540] hover:border-mint-400 transition">회원가입하고 쿠폰받기</Link>
+                <div className="text-white md:w-1/2 p-6">
+                  <h2 className="text-3xl md:text-4xl font-extrabold mb-3">신규회원 웰컴쿠폰<br />최대 2만원 증정</h2>
+                  <p className="text-base mb-4">지금 가입하면 민트 쿠폰팩 즉시 지급!</p>
+                  <Link href="/register" className="inline-block bg-white text-[#1a2540] border-2 border-[#1a2540] font-bold px-6 py-2 rounded-full shadow hover:bg-mint-400 hover:text-[#1a2540] hover:border-mint-400 transition">회원가입하고 쿠폰받기</Link>
                 </div>
-                <div className="md:w-1/2 flex justify-center p-8">
-                  <img src="/sample2.jpg" alt="웰컴쿠폰" className="rounded-2xl w-80 h-80 object-cover border-4 border-mint-400" />
+                <div className="md:w-1/2 flex justify-center p-6">
+                  <img src="/sample2.jpg" alt="웰컴쿠폰" className="rounded-2xl w-64 h-64 object-cover border-4 border-mint-400" />
                 </div>
               </div>
             </SwiperSlide>
             <SwiperSlide>
               <div className="flex flex-col md:flex-row items-center bg-mint-400">
-                <div className="text-white md:w-1/2 p-8">
-                  <h2 className="text-4xl md:text-5xl font-extrabold mb-4">오늘만! 타임딜<br />한정수량 초특가</h2>
-                  <p className="text-lg mb-6">놓치면 후회할 타임세일 상품을 확인하세요.</p>
-                  <Link href="/products" className="inline-block bg-white text-[#14213d] border-2 border-[#14213d] font-bold px-8 py-3 rounded-full shadow hover:bg-mint-400 hover:text-[#14213d] hover:border-mint-400 transition">타임딜 보기</Link>
+                <div className="text-white md:w-1/2 p-6">
+                  <h2 className="text-3xl md:text-4xl font-extrabold mb-3">오늘만! 타임딜<br />한정수량 초특가</h2>
+                  <p className="text-base mb-4">놓치면 후회할 타임세일 상품을 확인하세요.</p>
+                  <Link href="/products" className="inline-block bg-white text-[#14213d] border-2 border-[#14213d] font-bold px-6 py-2 rounded-full shadow hover:bg-mint-400 hover:text-[#14213d] hover:border-mint-400 transition">타임딜 보기</Link>
                 </div>
-                <div className="md:w-1/2 flex justify-center p-8">
-                  <img src="/sample3.jpg" alt="타임딜" className="rounded-2xl w-80 h-80 object-cover border-4 border-[#14213d]" />
+                <div className="md:w-1/2 flex justify-center p-6">
+                  <img src="/sample3.jpg" alt="타임딜" className="rounded-2xl w-64 h-64 object-cover border-4 border-[#14213d]" />
                 </div>
               </div>
             </SwiperSlide>
@@ -65,7 +65,7 @@ export default function Home() {
       </section>
 
       {/* 오늘의 특가(타임딜) 섹션 */}
-      <section className="max-w-7xl mx-auto px-4 py-12">
+      <section className="max-w-7xl mx-auto px-4 py-8">
         <h3 className="text-2xl font-bold text-[#14213d] mb-6">오늘의 특가</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           {[
@@ -84,7 +84,7 @@ export default function Home() {
       </section>
 
       {/* 베스트 상품 섹션 */}
-      <section className="max-w-7xl mx-auto px-4 py-12">
+      <section className="max-w-7xl mx-auto px-4 py-8">
         <h3 className="text-2xl font-bold text-[#14213d] mb-6">베스트 상품</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           {[
@@ -103,26 +103,44 @@ export default function Home() {
       </section>
 
       {/* 이벤트/쿠폰/혜택 섹션 */}
-      <section className="max-w-7xl mx-auto px-4 py-12">
+      <section className="max-w-7xl mx-auto px-4 py-8">
         <h3 className="text-2xl font-bold text-[#14213d] mb-6">이벤트 · 쿠폰 · 혜택</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          <div className="flex flex-col items-center bg-white rounded-xl shadow p-6 border border-mint-100">
+          <div 
+            className="flex flex-col items-center bg-white rounded-xl shadow p-6 border border-mint-100 cursor-pointer hover:shadow-lg transition-shadow"
+            onClick={() => {
+              console.log('이벤트 카드 클릭: 여름맞이 쿨특가 쿠폰');
+              alert('여름맞이 쿨특가 쿠폰 이벤트 준비 중입니다!');
+            }}
+          >
             <div className="w-full aspect-[3/2] mb-4 overflow-hidden rounded-lg">
               <img src="/event-coupon.jpg" alt="쿠폰 이벤트" className="w-full h-full object-cover" />
             </div>
             <div className="text-lg font-semibold text-emerald-700 mb-2">여름맞이 쿨특가 쿠폰</div>
             <div className="text-gray-500 text-sm text-center">여름 상품 10% 할인쿠폰을 지금 받으세요!</div>
           </div>
-          <div className="flex flex-col items-center bg-white rounded-xl shadow p-6 border border-mint-100">
+          <div 
+            className="flex flex-col items-center bg-white rounded-xl shadow p-6 border border-mint-100 cursor-pointer hover:shadow-lg transition-shadow"
+            onClick={() => {
+              console.log('이벤트 카드 클릭: 신규회원 웰컴 혜택');
+              alert('신규회원 웰컴 혜택 이벤트 준비 중입니다!');
+            }}
+          >
             <div className="w-full aspect-[3/2] mb-4 overflow-hidden rounded-lg">
-              <img src="/sample5.jpg" alt="신규회원 혜택" className="w-full h-full object-cover" />
+            <img src="/event-coupon.jpg" alt="쿠폰 이벤트" className="w-full h-full object-cover" />
             </div>
             <div className="text-lg font-semibold text-emerald-700 mb-2">신규회원 웰컴 혜택</div>
             <div className="text-gray-500 text-sm text-center">회원가입 시 웰컴쿠폰 즉시 지급!</div>
           </div>
-          <div className="flex flex-col items-center bg-white rounded-xl shadow p-6 border border-mint-100">
+          <div 
+            className="flex flex-col items-center bg-white rounded-xl shadow p-6 border border-mint-100 cursor-pointer hover:shadow-lg transition-shadow"
+            onClick={() => {
+              console.log('이벤트 카드 클릭: 타임딜 한정 이벤트');
+              alert('타임딜 한정 이벤트 준비 중입니다!');
+            }}
+          >
             <div className="w-full aspect-[3/2] mb-4 overflow-hidden rounded-lg">
-              <img src="/sample6.jpg" alt="타임딜" className="w-full h-full object-cover" />
+            <img src="/event-coupon.jpg" alt="쿠폰 이벤트" className="w-full h-full object-cover" />
             </div>
             <div className="text-lg font-semibold text-emerald-700 mb-2">타임딜 한정 이벤트</div>
             <div className="text-gray-500 text-sm text-center">타임딜 상품 전용 5% 쿠폰을 확인하세요!</div>

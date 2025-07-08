@@ -97,7 +97,7 @@ export default function OrdersPage() {
         ) : (
           <div className="space-y-6">
             {orders.map((order) => (
-              <div key={order.id} className="bg-white rounded-lg shadow-sm border">
+              <div key={order.id} className="bg-white rounded-lg shadow-sm border cursor-pointer hover:shadow-md transition-shadow">
                 {/* 주문 헤더 */}
                 <div className="px-6 py-4 border-b border-gray-200">
                   <div className="flex items-center justify-between">
@@ -151,6 +151,17 @@ export default function OrdersPage() {
                       <p className="text-gray-500">결제수단</p>
                       <p className="font-medium text-gray-900">{order.paymentMethod}</p>
                     </div>
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <Link
+                      href={`/checkout/success?orderId=${order.id}`}
+                      className="inline-flex items-center text-sm text-indigo-600 hover:text-indigo-500"
+                    >
+                      주문 상세 보기
+                      <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </Link>
                   </div>
                 </div>
               </div>
