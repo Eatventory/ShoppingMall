@@ -1,5 +1,8 @@
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useWishlist } from '../contexts/WishlistContext';
+import { useCart } from '../contexts/CartContext';
 
 export interface ProductCardProps {
   product: {
@@ -21,8 +24,25 @@ export interface ProductCardProps {
 }
 
 export default function ProductCard({ product, onLike }: ProductCardProps) {
+  const router = useRouter();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const { addToCart } = useCart();
+
+  const handleProductClick = (e: React.MouseEvent) => {
+    // 찜하기 버튼이나 장바구니 버튼 클릭 시에는 상품 상세로 이동하지 않음
+    if ((e.target as HTMLElement).closest('button')) {
+      return;
+    }
+    
+    // 상품 상세 페이지로 이동
+    router.push(`/products/${product.id}`);
+  };
+
   return (
-    <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow border border-mint-100 relative">
+    <div 
+      className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow border border-mint-100 relative cursor-pointer"
+      onClick={handleProductClick}
+    >
       <div className="relative">
         <img
           src={product.image}
@@ -35,26 +55,45 @@ export default function ProductCard({ product, onLike }: ProductCardProps) {
             <span className="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md border border-red-800 mb-1">{product.discount}% 할인</span>
           )}
           {product.freeShipping && (
-            <span className="bg-[#14213d] text-mint-200 text-xs font-bold px-2 py-1 rounded shadow-md border border-mint-400 mb-1">무료배송</span>
+            <span className="bg-[#14213d] text-white text-xs font-bold px-2 py-1 rounded shadow-md border border-mint-400 mb-1">무료배송</span>
           )}
           {product.coupon && (
             <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md border border-emerald-800">쿠폰</span>
           )}
         </div>
         {/* 찜하기 하트 */}
-        {onLike && (
-          <button
-            className="absolute top-2 right-2 z-10 p-1 bg-white/80 rounded-full shadow-md border border-mint-200 hover:scale-110 transition"
-            onClick={() => onLike(product.id)}
-            aria-label="찜하기"
-          >
-            {product.liked ? (
-              <AiFillHeart className="text-mint-400 w-8 h-8 drop-shadow" />
-            ) : (
-              <AiOutlineHeart className="text-gray-300 w-8 h-8 drop-shadow hover:text-mint-400 transition" />
-            )}
-          </button>
-        )}
+        <button
+          className="absolute top-2 right-2 z-10 p-1 bg-white/80 rounded-full shadow-md border border-mint-200 hover:scale-110 transition"
+          onClick={(e) => {
+            e.stopPropagation();
+            if (isInWishlist(product.id)) {
+              removeFromWishlist(product.id);
+            } else {
+              addToWishlist({
+                id: product.id,
+                name: product.name,
+                description: product.description,
+                price: product.price,
+                originalPrice: product.originalPrice,
+                image: product.image,
+                category: product.category,
+                rating: product.rating,
+                reviewCount: product.reviewCount,
+                discount: product.discount,
+                freeShipping: product.freeShipping,
+                coupon: product.coupon
+              });
+            }
+            if (onLike) onLike(product.id);
+          }}
+          aria-label="찜하기"
+        >
+          {isInWishlist(product.id) ? (
+            <AiFillHeart className="text-mint-400 w-8 h-8 drop-shadow" />
+          ) : (
+            <AiOutlineHeart className="text-gray-300 w-8 h-8 drop-shadow hover:text-mint-400 transition" />
+          )}
+        </button>
       </div>
       <div className="p-4">
         <h3 className="text-lg font-medium text-gray-900 mb-2">{product.name}</h3>
@@ -95,7 +134,21 @@ export default function ProductCard({ product, onLike }: ProductCardProps) {
               {product.price.toLocaleString()}원
             </span>
           </div>
-          <button className="bg-mint-400 text-[#14213d] px-4 py-2 rounded-md text-sm font-medium hover:bg-mint-300 transition-colors">
+          <button 
+            className="bg-mint-400 text-[#14213d] px-4 py-2 rounded-md text-sm font-medium hover:bg-mint-300 transition-colors"
+            onClick={(e) => {
+              e.stopPropagation();
+              addToCart({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                originalPrice: product.originalPrice,
+                image: product.image,
+                discount: product.discount
+              });
+              alert(`${product.name}이(가) 장바구니에 추가되었습니다!`);
+            }}
+          >
             장바구니
           </button>
         </div>
