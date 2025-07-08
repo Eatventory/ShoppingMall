@@ -1,16 +1,14 @@
-'use client';
-
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
-import ProductCard from '../../components/ProductCard';
-import LoadingSpinner from '../../components/ui/LoadingSpinner';
-import EmptyState from '../../components/ui/EmptyState';
-import { Product } from '../../types';
-import { SUB_CATEGORIES, SORT_OPTIONS } from '../../utils/constants';
-import { mockProducts } from '../../utils/mockData';
+import { useSearchParams } from 'react-router-dom';
+import ProductCard from '../components/ProductCard';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
+import EmptyState from '../components/ui/EmptyState';
+import { Product } from '../types';
+import { SUB_CATEGORIES, SORT_OPTIONS } from '../utils/constants';
+import { mockProducts } from '../utils/mockData';
 
 export default function ProductsPage() {
-  const searchParams = useSearchParams();
+  const [searchParams] = useSearchParams();
   const categoryFromNav = searchParams.get('category') || 'all';
   const searchFromNav = searchParams.get('search') || '';
   const [products, setProducts] = useState<Product[]>([]);

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 
 interface EmptyStateProps {
   icon?: string;
@@ -24,7 +24,7 @@ export default function EmptyState({
       <p className="text-gray-500 mb-8">{description}</p>
       {actionText && actionHref && (
         <Link
-          href={actionHref}
+          to={actionHref}
           className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
         >
           {actionText}

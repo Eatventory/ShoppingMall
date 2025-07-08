@@ -1,5 +1,4 @@
-'use client';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
@@ -29,7 +28,7 @@ export default function Home() {
                 <div className="text-white md:w-1/2 p-6">
                   <h2 className="text-3xl md:text-4xl font-extrabold mb-3">여름맞이 쿨특가<br />최대 50% 할인!</h2>
                   <p className="text-base mb-4">시원한 여름 상품을 민트 특가로 만나보세요.</p>
-                  <Link href="/products" className="inline-block bg-white text-[#14213d] border-2 border-[#14213d] font-bold px-6 py-2 rounded-full shadow hover:bg-mint-400 hover:text-[#14213d] hover:border-mint-400 transition">특가 상품 보기</Link>
+                  <Link to="/products" className="inline-block bg-white text-[#14213d] border-2 border-[#14213d] font-bold px-6 py-2 rounded-full shadow hover:bg-mint-400 hover:text-[#14213d] hover:border-mint-400 transition">특가 상품 보기</Link>
                 </div>
                 <div className="md:w-1/2 flex justify-center p-6">
                   <img src="/sample1.jpg" alt="여름 특가" className="rounded-2xl w-64 h-64 object-cover border-4 border-mint-400" />
@@ -41,7 +40,7 @@ export default function Home() {
                 <div className="text-white md:w-1/2 p-6">
                   <h2 className="text-3xl md:text-4xl font-extrabold mb-3">신규회원 웰컴쿠폰<br />최대 2만원 증정</h2>
                   <p className="text-base mb-4">지금 가입하면 민트 쿠폰팩 즉시 지급!</p>
-                  <Link href="/register" className="inline-block bg-white text-[#1a2540] border-2 border-[#1a2540] font-bold px-6 py-2 rounded-full shadow hover:bg-mint-400 hover:text-[#1a2540] hover:border-mint-400 transition">회원가입하고 쿠폰받기</Link>
+                  <Link to="/register" className="inline-block bg-white text-[#1a2540] border-2 border-[#1a2540] font-bold px-6 py-2 rounded-full shadow hover:bg-mint-400 hover:text-[#1a2540] hover:border-mint-400 transition">회원가입하고 쿠폰받기</Link>
                 </div>
                 <div className="md:w-1/2 flex justify-center p-6">
                   <img src="/sample2.jpg" alt="웰컴쿠폰" className="rounded-2xl w-64 h-64 object-cover border-4 border-mint-400" />
@@ -53,7 +52,7 @@ export default function Home() {
                 <div className="text-white md:w-1/2 p-6">
                   <h2 className="text-3xl md:text-4xl font-extrabold mb-3">오늘만! 타임딜<br />한정수량 초특가</h2>
                   <p className="text-base mb-4">놓치면 후회할 타임세일 상품을 확인하세요.</p>
-                  <Link href="/products" className="inline-block bg-white text-[#14213d] border-2 border-[#14213d] font-bold px-6 py-2 rounded-full shadow hover:bg-mint-400 hover:text-[#14213d] hover:border-mint-400 transition">타임딜 보기</Link>
+                  <Link to="/products" className="inline-block bg-white text-[#14213d] border-2 border-[#14213d] font-bold px-6 py-2 rounded-full shadow hover:bg-mint-400 hover:text-[#14213d] hover:border-mint-400 transition">타임딜 보기</Link>
                 </div>
                 <div className="md:w-1/2 flex justify-center p-6">
                   <img src="/sample3.jpg" alt="타임딜" className="rounded-2xl w-64 h-64 object-cover border-4 border-[#14213d]" />
@@ -161,17 +160,17 @@ export default function Home() {
             <div>
               <h4 className="text-mint-400 text-sm font-semibold mb-4">고객 서비스</h4>
               <ul className="space-y-2">
-                <li><Link href="/contact" className="text-gray-300 text-sm hover:text-mint-400">문의하기</Link></li>
-                <li><Link href="/faq" className="text-gray-300 text-sm hover:text-mint-400">자주 묻는 질문</Link></li>
-                <li><Link href="/shipping" className="text-gray-300 text-sm hover:text-mint-400">배송 안내</Link></li>
+                <li><Link to="/contact" className="text-gray-300 text-sm hover:text-mint-400">문의하기</Link></li>
+                <li><Link to="/faq" className="text-gray-300 text-sm hover:text-mint-400">자주 묻는 질문</Link></li>
+                <li><Link to="/shipping" className="text-gray-300 text-sm hover:text-mint-400">배송 안내</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="text-mint-400 text-sm font-semibold mb-4">회사 정보</h4>
               <ul className="space-y-2">
-                <li><Link href="/about" className="text-gray-300 text-sm hover:text-mint-400">회사 소개</Link></li>
-                <li><Link href="/privacy" className="text-gray-300 text-sm hover:text-mint-400">개인정보처리방침</Link></li>
-                <li><Link href="/terms" className="text-gray-300 text-sm hover:text-mint-400">이용약관</Link></li>
+                <li><Link to="/about" className="text-gray-300 text-sm hover:text-mint-400">회사 소개</Link></li>
+                <li><Link to="/privacy" className="text-gray-300 text-sm hover:text-mint-400">개인정보처리방침</Link></li>
+                <li><Link to="/terms" className="text-gray-300 text-sm hover:text-mint-400">이용약관</Link></li>
               </ul>
             </div>
             <div>
@@ -192,6 +191,4 @@ export default function Home() {
       </footer>
     </div>
   );
-}
-
-// Tailwind에 mint 컬러 커스텀 필요: tailwind.config.js에 theme.extend.colors.mint 추가
+} 

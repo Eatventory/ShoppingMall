@@ -1,17 +1,16 @@
 "use client";
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 export default function Navbar() {
-  const pathname = usePathname();
-  const router = useRouter();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchTerm.trim()) {
-      router.push(`/products?search=${encodeURIComponent(searchTerm.trim())}`);
+      navigate(`/products?search=${encodeURIComponent(searchTerm.trim())}`);
       setSearchTerm('');
     }
   };
@@ -20,7 +19,7 @@ export default function Navbar() {
     <header className="bg-[#14213d] text-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
         {/* 로고 */}
-        <Link href="/" className="text-3xl font-extrabold tracking-tight text-mint-400">
+        <Link to="/" className="text-3xl font-extrabold tracking-tight text-mint-400">
           JUNGLE SHOP
         </Link>
         {/* 검색바 */}
@@ -46,26 +45,26 @@ export default function Navbar() {
         </div>
         {/* 네비게이션 */}
         <nav className="flex items-center space-x-6">
-          <Link href="/wishlist" className={`hover:text-mint-400 font-semibold${pathname.startsWith('/wishlist') ? ' text-mint-400' : ''}`}>찜한상품</Link>
-          <Link href="/cart" className={`hover:text-mint-400 font-semibold${pathname.startsWith('/cart') ? ' text-mint-400' : ''}`}>장바구니</Link>
-          <Link href="/orders" className={`hover:text-mint-400 font-semibold${pathname.startsWith('/orders') ? ' text-mint-400' : ''}`}>주문조회</Link>
-          <Link href="/login" className={`hover:text-mint-400 font-semibold${pathname.startsWith('/login') ? ' text-mint-400' : ''}`}>로그인</Link>
-          <Link href="/register" className={`hover:text-mint-400 font-semibold${pathname.startsWith('/register') ? ' text-mint-400' : ''}`}>회원가입</Link>
+          <Link to="/wishlist" className={`hover:text-mint-400 font-semibold${location.pathname.startsWith('/wishlist') ? ' text-mint-400' : ''}`}>찜한상품</Link>
+          <Link to="/cart" className={`hover:text-mint-400 font-semibold${location.pathname.startsWith('/cart') ? ' text-mint-400' : ''}`}>장바구니</Link>
+          <Link to="/orders" className={`hover:text-mint-400 font-semibold${location.pathname.startsWith('/orders') ? ' text-mint-400' : ''}`}>주문조회</Link>
+          <Link to="/login" className={`hover:text-mint-400 font-semibold${location.pathname.startsWith('/login') ? ' text-mint-400' : ''}`}>로그인</Link>
+          <Link to="/register" className={`hover:text-mint-400 font-semibold${location.pathname.startsWith('/register') ? ' text-mint-400' : ''}`}>회원가입</Link>
         </nav>
       </div>
       {/* 카테고리 바 */}
-      <div className="bg-[#1a2540] text-mint-400 text-base">
+      <div className="bg-[#1a2540] border-t border-[#2a3550]">
         <div className="max-w-7xl mx-auto px-4 flex space-x-6 h-12 items-center">
-          <Link href="/products" className="hover:text-white font-medium">전체</Link>
-          <Link href="/products?category=electronics" className="hover:text-white font-medium">전자제품</Link>
-          <Link href="/products?category=clothing" className="hover:text-white font-medium">의류</Link>
-          <Link href="/products?category=appliances" className="hover:text-white font-medium">가전제품</Link>
-          <Link href="/products?category=sports" className="hover:text-white font-medium">스포츠</Link>
-          <Link href="/products?category=food" className="hover:text-white font-medium">식품</Link>
-          <Link href="/products?category=beauty" className="hover:text-white font-medium">뷰티</Link>
-          <Link href="/products?category=kids" className="hover:text-white font-medium">유아동</Link>
-          <Link href="/products?category=home" className="hover:text-white font-medium">홈리빙</Link>
-          <Link href="/products?category=pet" className="hover:text-white font-medium">반려동물</Link>
+          <Link to="/products" className="hover:text-white font-medium">전체</Link>
+          <Link to="/products?category=electronics" className="hover:text-white font-medium">전자제품</Link>
+          <Link to="/products?category=clothing" className="hover:text-white font-medium">의류</Link>
+          <Link to="/products?category=appliances" className="hover:text-white font-medium">가전제품</Link>
+          <Link to="/products?category=sports" className="hover:text-white font-medium">스포츠</Link>
+          <Link to="/products?category=food" className="hover:text-white font-medium">식품</Link>
+          <Link to="/products?category=beauty" className="hover:text-white font-medium">뷰티</Link>
+          <Link to="/products?category=kids" className="hover:text-white font-medium">유아동</Link>
+          <Link to="/products?category=home" className="hover:text-white font-medium">홈리빙</Link>
+          <Link to="/products?category=pet" className="hover:text-white font-medium">반려동물</Link>
         </div>
       </div>
     </header>

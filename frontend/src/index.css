@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-geist-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-geist-mono: 'Geist Mono', 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', 'Monaco', 'Consolas', 'Courier New', monospace;
+}
+
+body {
+  font-family: var(--font-geist-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Mint color for Tailwind */
+.mint-400 {
+  color: #4ade80;
+}
+
+.bg-mint-400 {
+  background-color: #4ade80;
+}
+
+.border-mint-400 {
+  border-color: #4ade80;
+}
+
+.hover\:bg-mint-400:hover {
+  background-color: #4ade80;
+}
+
+.hover\:text-mint-400:hover {
+  color: #4ade80;
+}
+
+.hover\:border-mint-400:hover {
+  border-color: #4ade80;
+}
+
+.text-mint-400 {
+  color: #4ade80;
+}
+
+.border-mint-100 {
+  border-color: #dcfce7;
+}
+
+.bg-mint-100 {
+  background-color: #dcfce7;
+} 
