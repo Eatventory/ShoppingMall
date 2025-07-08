@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { AiFillHeart } from 'react-icons/ai';
+import { BsCartPlus } from 'react-icons/bs';
 import { useWishlist } from '../../contexts/WishlistContext';
 import { useCart } from '../../contexts/CartContext';
 
@@ -10,6 +11,8 @@ export default function WishlistPage() {
   const { wishlistItems, removeFromWishlist } = useWishlist();
   const { addToCart } = useCart();
   const [isLoading, setIsLoading] = useState(false);
+  const [showCartSuccess, setShowCartSuccess] = useState(false);
+  const [addedProduct, setAddedProduct] = useState<any>(null);
 
   const handleLike = (productId: number) => {
     removeFromWishlist(productId);
@@ -26,7 +29,8 @@ export default function WishlistPage() {
         image: product.image,
         discount: product.discount
       });
-      alert('장바구니에 추가되었습니다!');
+      setAddedProduct(product);
+      setShowCartSuccess(true);
     }
   };
 
@@ -159,10 +163,11 @@ export default function WishlistPage() {
                     {/* 액션 버튼들 */}
                     <div className="flex space-x-2">
                       <button 
-                        className="flex-1 bg-mint-400 text-[#14213d] px-4 py-2 rounded-md text-sm font-medium hover:bg-mint-300 transition-colors"
+                        className="px-4 py-2 bg-white border border-gray-300 text-mint-400 rounded-md hover:bg-mint-400 hover:text-white transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center"
                         onClick={() => handleAddToCart(product.id)}
+                        aria-label="장바구니에 추가"
                       >
-                        장바구니
+                        <BsCartPlus className="w-5 h-5" />
                       </button>
                       <Link 
                         href={`/products/${product.id}`}
@@ -176,6 +181,40 @@ export default function WishlistPage() {
               ))}
             </div>
           </>
+        )}
+
+        {/* 장바구니 추가 성공 팝업 */}
+        {showCartSuccess && addedProduct && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm">
+            <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4 text-center">
+              <div className="mb-4">
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">장바구니에 추가되었습니다!</h3>
+                <p className="text-sm text-gray-600">
+                  {addedProduct.name}
+                </p>
+              </div>
+              <div className="flex space-x-3">
+                <button
+                  onClick={() => setShowCartSuccess(false)}
+                  className="flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-md text-sm font-medium hover:bg-gray-300 transition-colors"
+                >
+                  계속 쇼핑
+                </button>
+                <Link
+                  href="/cart"
+                  onClick={() => setShowCartSuccess(false)}
+                  className="flex-1 bg-[#14213d] text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-[#1a2540] transition-colors"
+                >
+                  장바구니 보기
+                </Link>
+              </div>
+            </div>
+          </div>
         )}
       </main>
     </div>

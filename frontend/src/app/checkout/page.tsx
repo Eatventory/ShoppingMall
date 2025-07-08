@@ -47,8 +47,13 @@ export default function CheckoutPage() {
   const [showPaymentSuccess, setShowPaymentSuccess] = useState(false);
 
   // 장바구니가 비어있으면 홈으로 리다이렉트
+  useEffect(() => {
+    if (cartItems.length === 0) {
+      router.push('/');
+    }
+  }, [cartItems.length, router]);
+
   if (cartItems.length === 0) {
-    router.push('/');
     return null;
   }
 
