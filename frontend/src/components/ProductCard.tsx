@@ -160,7 +160,10 @@ export default function ProductCard({ product, onLike }: ProductCardProps) {
 
       {/* 장바구니 추가 성공 팝업 */}
       {showCartSuccess && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm">
+        <div 
+          className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm"
+          onClick={(e) => e.stopPropagation()}
+        >
           <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4 text-center">
             <div className="mb-4">
               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -182,7 +185,10 @@ export default function ProductCard({ product, onLike }: ProductCardProps) {
               </button>
               <Link
                 href="/cart"
-                onClick={() => setShowCartSuccess(false)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowCartSuccess(false);
+                }}
                 className="flex-1 bg-[#14213d] text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-[#1a2540] transition-colors"
               >
                 장바구니 보기
