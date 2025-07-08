@@ -7,18 +7,8 @@ import 'swiper/css';
 import ProductCard from '../components/ProductCard';
 
 export default function Home() {
-  const [likedProducts, setLikedProducts] = useState<Set<number>>(new Set());
-
   const handleLike = (productId: number) => {
-    setLikedProducts(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(productId)) {
-        newSet.delete(productId);
-      } else {
-        newSet.add(productId);
-      }
-      return newSet;
-    });
+    // WishlistContext에서 자동으로 처리됨
   };
 
   return (
@@ -86,10 +76,7 @@ export default function Home() {
           ].map((product) => (
             <ProductCard 
               key={product.id} 
-              product={{
-                ...product,
-                liked: likedProducts.has(product.id)
-              }} 
+              product={product}
               onLike={handleLike}
             />
           ))}
@@ -108,17 +95,12 @@ export default function Home() {
           ].map((product) => (
             <ProductCard 
               key={product.id} 
-              product={{
-                ...product,
-                liked: likedProducts.has(product.id)
-              }} 
+              product={product}
               onLike={handleLike}
             />
           ))}
         </div>
       </section>
-
-
 
       {/* 이벤트/쿠폰/혜택 섹션 */}
       <section className="max-w-7xl mx-auto px-4 py-12">
@@ -133,14 +115,14 @@ export default function Home() {
           </div>
           <div className="flex flex-col items-center bg-white rounded-xl shadow p-6 border border-mint-100">
             <div className="w-full aspect-[3/2] mb-4 overflow-hidden rounded-lg">
-              <img src="/event-benefit.jpg" alt="신규회원 혜택" className="w-full h-full object-cover" />
+              <img src="/sample5.jpg" alt="신규회원 혜택" className="w-full h-full object-cover" />
             </div>
             <div className="text-lg font-semibold text-emerald-700 mb-2">신규회원 웰컴 혜택</div>
             <div className="text-gray-500 text-sm text-center">회원가입 시 웰컴쿠폰 즉시 지급!</div>
           </div>
           <div className="flex flex-col items-center bg-white rounded-xl shadow p-6 border border-mint-100">
             <div className="w-full aspect-[3/2] mb-4 overflow-hidden rounded-lg">
-              <img src="/event-timedeal.jpg" alt="타임딜" className="w-full h-full object-cover" />
+              <img src="/sample6.jpg" alt="타임딜" className="w-full h-full object-cover" />
             </div>
             <div className="text-lg font-semibold text-emerald-700 mb-2">타임딜 한정 이벤트</div>
             <div className="text-gray-500 text-sm text-center">타임딜 상품 전용 5% 쿠폰을 확인하세요!</div>
@@ -153,7 +135,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <h3 className="text-mint-400 text-lg font-semibold mb-4">NAMAN MARKET</h3>
+              <h3 className="text-mint-400 text-lg font-semibold mb-4">JUNGLE SHOP</h3>
               <p className="text-gray-300 text-sm">
                 네이비+민트 감성의 마켓플레이스, 최고의 상품과 서비스를 제공합니다.
               </p>
@@ -177,7 +159,7 @@ export default function Home() {
             <div>
               <h4 className="text-mint-400 text-sm font-semibold mb-4">연락처</h4>
               <p className="text-gray-300 text-sm">
-                이메일: info@namanmarket.com<br />
+                이메일: info@jungleshop.com<br />
                 전화: 02-1234-5678<br />
                 주소: 서울시 강남구
               </p>
@@ -185,7 +167,7 @@ export default function Home() {
           </div>
           <div className="mt-8 pt-8 border-t border-gray-700">
             <p className="text-gray-300 text-sm text-center">
-              © 2024 NAMAN MARKET. All rights reserved.
+              © 2025 JUNGLE SHOP. All rights reserved.
             </p>
           </div>
         </div>

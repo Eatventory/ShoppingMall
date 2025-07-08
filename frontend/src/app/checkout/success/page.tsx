@@ -48,7 +48,7 @@ export default function CheckoutSuccessPage() {
 
           {/* 성공 메시지 */}
           <h1 className="text-3xl font-bold text-gray-900 mb-4">
-            주문이 완료되었습니다!
+            결제가 완료되었습니다!
           </h1>
           <p className="text-lg text-gray-600 mb-8">
             주문해주셔서 감사합니다. 주문 내역은 이메일로 발송해드립니다.

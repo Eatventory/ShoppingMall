@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useCart } from '../../contexts/CartContext';
+import { useOrders } from '../../contexts/OrderContext';
 
 interface ShippingInfo {
   name: string;
@@ -24,6 +25,7 @@ interface PaymentInfo {
 export default function CheckoutPage() {
   const router = useRouter();
   const { cartItems, getCartTotal, clearCart } = useCart();
+  const { addOrder } = useOrders();
   
   const [shippingInfo, setShippingInfo] = useState<ShippingInfo>({
     name: '',
@@ -67,6 +69,21 @@ export default function CheckoutPage() {
     }));
   };
 
+  const getPaymentMethodText = (method: string) => {
+    switch (method) {
+      case 'card':
+        return '신용카드';
+      case 'bank':
+        return '계좌이체';
+      case 'kakao':
+        return '카카오페이';
+      case 'naver':
+        return '네이버페이';
+      default:
+        return method;
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsProcessing(true);
@@ -74,6 +91,26 @@ export default function CheckoutPage() {
     try {
       // 결제 처리 시뮬레이션 (실제로는 결제 API 호출)
       await new Promise(resolve => setTimeout(resolve, 2000));
+
+      // 주문 데이터 생성
+      const orderItems = cartItems.map(item => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+        image: item.image
+      }));
+
+      const fullAddress = `${shippingInfo.address} ${shippingInfo.detailAddress}`.trim();
+
+      // 주문 추가
+      addOrder({
+        status: 'completed',
+        totalAmount: total,
+        items: orderItems,
+        shippingAddress: fullAddress,
+        paymentMethod: getPaymentMethodText(paymentInfo.method)
+      });
 
       // TODO: 결제 시작 이벤트 트래킹 구현
       console.log('결제 시작:', { cartItems, total, paymentMethod: paymentInfo.method });
