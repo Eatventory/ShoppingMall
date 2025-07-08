@@ -1,5 +1,6 @@
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export interface ProductCardProps {
   product: {
@@ -21,8 +22,23 @@ export interface ProductCardProps {
 }
 
 export default function ProductCard({ product, onLike }: ProductCardProps) {
+  const router = useRouter();
+
+  const handleProductClick = (e: React.MouseEvent) => {
+    // 찜하기 버튼이나 장바구니 버튼 클릭 시에는 상품 상세로 이동하지 않음
+    if ((e.target as HTMLElement).closest('button')) {
+      return;
+    }
+    
+    // 상품 상세 페이지로 이동
+    router.push(`/products/${product.id}`);
+  };
+
   return (
-    <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow border border-mint-100 relative">
+    <div 
+      className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow border border-mint-100 relative cursor-pointer"
+      onClick={handleProductClick}
+    >
       <div className="relative">
         <img
           src={product.image}

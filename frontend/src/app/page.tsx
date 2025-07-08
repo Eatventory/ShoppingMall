@@ -1,11 +1,26 @@
 'use client';
 import Link from 'next/link';
+import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import ProductCard from '../components/ProductCard';
 
 export default function Home() {
+  const [likedProducts, setLikedProducts] = useState<Set<number>>(new Set());
+
+  const handleLike = (productId: number) => {
+    setLikedProducts(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(productId)) {
+        newSet.delete(productId);
+      } else {
+        newSet.add(productId);
+      }
+      return newSet;
+    });
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* 메인 슬라이드 배너 */}
@@ -69,7 +84,14 @@ export default function Home() {
             { id: 5, name: '커피머신', price: 250000, originalPrice: 320000, image: '/sample5.jpg', discount: 22, freeShipping: false, coupon: true, liked: false, rating: 4.8, reviewCount: 67, description: '자동 커피머신, 다양한 음료 제조 가능' },
             { id: 4, name: '운동화', price: 89000, image: '/sample4.jpg', freeShipping: true, coupon: false, liked: true, rating: 4.3, reviewCount: 203, description: '편안한 착용감의 운동화' }
           ].map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard 
+              key={product.id} 
+              product={{
+                ...product,
+                liked: likedProducts.has(product.id)
+              }} 
+              onLike={handleLike}
+            />
           ))}
         </div>
       </section>
@@ -84,7 +106,14 @@ export default function Home() {
             { id: 5, name: '커피머신', price: 250000, image: '/sample5.jpg', freeShipping: false, coupon: true, liked: false, rating: 4.8, reviewCount: 67, description: '자동 커피머신, 다양한 음료 제조 가능' },
             { id: 4, name: '운동화', price: 89000, image: '/sample4.jpg', freeShipping: true, coupon: false, liked: true, rating: 4.3, reviewCount: 203, description: '편안한 착용감의 운동화' }
           ].map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard 
+              key={product.id} 
+              product={{
+                ...product,
+                liked: likedProducts.has(product.id)
+              }} 
+              onLike={handleLike}
+            />
           ))}
         </div>
       </section>
@@ -102,8 +131,36 @@ export default function Home() {
                 <a href="/products?category=electronics" className="ml-auto text-mint-600 text-sm hover:underline">더보기 &gt;</a>
               </div>
               <div className="flex gap-4">
-                <ProductCard product={{ id: 201, name: '노트북', price: 1200000, image: '/sample1.jpg', freeShipping: true, coupon: true, liked: false, rating: 4.8, reviewCount: 210, description: '최신형 고성능 노트북' }} />
-                <ProductCard product={{ id: 202, name: '무선 이어폰', price: 89000, image: '/sample2.jpg', freeShipping: true, coupon: false, liked: true, rating: 4.6, reviewCount: 98, description: '고음질 무선 이어폰' }} />
+                <ProductCard 
+                  product={{ 
+                    id: 201, 
+                    name: '노트북', 
+                    price: 1200000, 
+                    image: '/sample1.jpg', 
+                    freeShipping: true, 
+                    coupon: true, 
+                    liked: likedProducts.has(201), 
+                    rating: 4.8, 
+                    reviewCount: 210, 
+                    description: '최신형 고성능 노트북' 
+                  }} 
+                  onLike={handleLike}
+                />
+                <ProductCard 
+                  product={{ 
+                    id: 202, 
+                    name: '무선 이어폰', 
+                    price: 89000, 
+                    image: '/sample2.jpg', 
+                    freeShipping: true, 
+                    coupon: false, 
+                    liked: likedProducts.has(202), 
+                    rating: 4.6, 
+                    reviewCount: 98, 
+                    description: '고음질 무선 이어폰' 
+                  }} 
+                  onLike={handleLike}
+                />
               </div>
             </div>
             {/* 패션의류 */}
@@ -114,8 +171,36 @@ export default function Home() {
                 <a href="/products?category=fashion" className="ml-auto text-mint-600 text-sm hover:underline">더보기 &gt;</a>
               </div>
               <div className="flex gap-4">
-                <ProductCard product={{ id: 203, name: '여름 반팔티', price: 19000, image: '/sample3.jpg', freeShipping: true, coupon: false, liked: true, rating: 4.7, reviewCount: 156, description: '시원한 소재의 여름 반팔티' }} />
-                <ProductCard product={{ id: 204, name: '린넨 팬츠', price: 29000, image: '/sample4.jpg', freeShipping: false, coupon: true, liked: false, rating: 4.5, reviewCount: 77, description: '통기성 좋은 린넨 팬츠' }} />
+                <ProductCard 
+                  product={{ 
+                    id: 203, 
+                    name: '여름 반팔티', 
+                    price: 19000, 
+                    image: '/sample3.jpg', 
+                    freeShipping: true, 
+                    coupon: false, 
+                    liked: likedProducts.has(203), 
+                    rating: 4.7, 
+                    reviewCount: 156, 
+                    description: '시원한 소재의 여름 반팔티' 
+                  }} 
+                  onLike={handleLike}
+                />
+                <ProductCard 
+                  product={{ 
+                    id: 204, 
+                    name: '린넨 팬츠', 
+                    price: 29000, 
+                    image: '/sample4.jpg', 
+                    freeShipping: false, 
+                    coupon: true, 
+                    liked: likedProducts.has(204), 
+                    rating: 4.5, 
+                    reviewCount: 77, 
+                    description: '통기성 좋은 린넨 팬츠' 
+                  }} 
+                  onLike={handleLike}
+                />
               </div>
             </div>
             {/* 식품 */}
@@ -126,8 +211,36 @@ export default function Home() {
                 <a href="/products?category=food" className="ml-auto text-mint-600 text-sm hover:underline">더보기 &gt;</a>
               </div>
               <div className="flex gap-4">
-                <ProductCard product={{ id: 205, name: '유기농 사과', price: 12000, image: '/sample5.jpg', freeShipping: false, coupon: true, liked: false, rating: 4.9, reviewCount: 54, description: '신선한 유기농 사과 3kg' }} />
-                <ProductCard product={{ id: 206, name: '한우 불고기', price: 39000, image: '/sample6.jpg', freeShipping: true, coupon: false, liked: true, rating: 4.8, reviewCount: 65, description: '국내산 한우 불고기 500g' }} />
+                <ProductCard 
+                  product={{ 
+                    id: 205, 
+                    name: '유기농 사과', 
+                    price: 12000, 
+                    image: '/sample5.jpg', 
+                    freeShipping: false, 
+                    coupon: true, 
+                    liked: likedProducts.has(205), 
+                    rating: 4.9, 
+                    reviewCount: 54, 
+                    description: '신선한 유기농 사과 3kg' 
+                  }} 
+                  onLike={handleLike}
+                />
+                <ProductCard 
+                  product={{ 
+                    id: 206, 
+                    name: '한우 불고기', 
+                    price: 39000, 
+                    image: '/sample6.jpg', 
+                    freeShipping: true, 
+                    coupon: false, 
+                    liked: likedProducts.has(206), 
+                    rating: 4.8, 
+                    reviewCount: 65, 
+                    description: '국내산 한우 불고기 500g' 
+                  }} 
+                  onLike={handleLike}
+                />
               </div>
             </div>
             {/* 뷰티 */}
@@ -138,8 +251,36 @@ export default function Home() {
                 <a href="/products?category=beauty" className="ml-auto text-mint-600 text-sm hover:underline">더보기 &gt;</a>
               </div>
               <div className="flex gap-4">
-                <ProductCard product={{ id: 207, name: '쿠션 파운데이션', price: 32000, image: '/sample7.jpg', freeShipping: true, coupon: true, liked: false, rating: 4.7, reviewCount: 77, description: '촉촉한 쿠션 파운데이션' }} />
-                <ProductCard product={{ id: 208, name: '립스틱', price: 18000, image: '/sample8.jpg', freeShipping: true, coupon: false, liked: false, rating: 4.5, reviewCount: 120, description: '선명한 컬러 립스틱' }} />
+                <ProductCard 
+                  product={{ 
+                    id: 207, 
+                    name: '쿠션 파운데이션', 
+                    price: 32000, 
+                    image: '/sample7.jpg', 
+                    freeShipping: true, 
+                    coupon: true, 
+                    liked: likedProducts.has(207), 
+                    rating: 4.7, 
+                    reviewCount: 77, 
+                    description: '촉촉한 쿠션 파운데이션' 
+                  }} 
+                  onLike={handleLike}
+                />
+                <ProductCard 
+                  product={{ 
+                    id: 208, 
+                    name: '립스틱', 
+                    price: 18000, 
+                    image: '/sample8.jpg', 
+                    freeShipping: true, 
+                    coupon: false, 
+                    liked: likedProducts.has(208), 
+                    rating: 4.5, 
+                    reviewCount: 120, 
+                    description: '선명한 컬러 립스틱' 
+                  }} 
+                  onLike={handleLike}
+                />
               </div>
             </div>
             {/* 스포츠/레저 */}
@@ -150,8 +291,36 @@ export default function Home() {
                 <a href="/products?category=sports" className="ml-auto text-mint-600 text-sm hover:underline">더보기 &gt;</a>
               </div>
               <div className="flex gap-4">
-                <ProductCard product={{ id: 209, name: '요가매트', price: 18000, image: '/sample9.jpg', freeShipping: true, coupon: false, liked: false, rating: 4.5, reviewCount: 120, description: '미끄럼 방지 요가매트' }} />
-                <ProductCard product={{ id: 210, name: '러닝화', price: 69000, image: '/sample10.jpg', freeShipping: true, coupon: true, liked: true, rating: 4.8, reviewCount: 88, description: '가벼운 러닝화' }} />
+                <ProductCard 
+                  product={{ 
+                    id: 209, 
+                    name: '요가매트', 
+                    price: 18000, 
+                    image: '/sample9.jpg', 
+                    freeShipping: true, 
+                    coupon: false, 
+                    liked: likedProducts.has(209), 
+                    rating: 4.5, 
+                    reviewCount: 120, 
+                    description: '미끄럼 방지 요가매트' 
+                  }} 
+                  onLike={handleLike}
+                />
+                <ProductCard 
+                  product={{ 
+                    id: 210, 
+                    name: '러닝화', 
+                    price: 69000, 
+                    image: '/sample10.jpg', 
+                    freeShipping: true, 
+                    coupon: true, 
+                    liked: likedProducts.has(210), 
+                    rating: 4.8, 
+                    reviewCount: 88, 
+                    description: '가벼운 러닝화' 
+                  }} 
+                  onLike={handleLike}
+                />
               </div>
             </div>
             {/* 유아동 */}
@@ -162,8 +331,36 @@ export default function Home() {
                 <a href="/products?category=kids" className="ml-auto text-mint-600 text-sm hover:underline">더보기 &gt;</a>
               </div>
               <div className="flex gap-4">
-                <ProductCard product={{ id: 211, name: '아기 물티슈', price: 8900, image: '/sample11.jpg', freeShipping: true, coupon: false, liked: true, rating: 4.8, reviewCount: 65, description: '안심하고 쓸 수 있는 아기 물티슈' }} />
-                <ProductCard product={{ id: 212, name: '유아용 의자', price: 39000, image: '/sample12.jpg', freeShipping: true, coupon: false, liked: false, rating: 4.6, reviewCount: 41, description: '편안한 유아용 의자' }} />
+                <ProductCard 
+                  product={{ 
+                    id: 211, 
+                    name: '아기 물티슈', 
+                    price: 8900, 
+                    image: '/sample11.jpg', 
+                    freeShipping: true, 
+                    coupon: false, 
+                    liked: likedProducts.has(211), 
+                    rating: 4.8, 
+                    reviewCount: 65, 
+                    description: '안심하고 쓸 수 있는 아기 물티슈' 
+                  }} 
+                  onLike={handleLike}
+                />
+                <ProductCard 
+                  product={{ 
+                    id: 212, 
+                    name: '유아용 의자', 
+                    price: 39000, 
+                    image: '/sample12.jpg', 
+                    freeShipping: true, 
+                    coupon: false, 
+                    liked: likedProducts.has(212), 
+                    rating: 4.6, 
+                    reviewCount: 41, 
+                    description: '편안한 유아용 의자' 
+                  }} 
+                  onLike={handleLike}
+                />
               </div>
             </div>
             {/* 리빙/홈 */}
@@ -174,8 +371,36 @@ export default function Home() {
                 <a href="/products?category=home" className="ml-auto text-mint-600 text-sm hover:underline">더보기 &gt;</a>
               </div>
               <div className="flex gap-4">
-                <ProductCard product={{ id: 213, name: '프리미엄 소파', price: 650000, image: '/sample13.jpg', freeShipping: true, coupon: true, liked: false, rating: 4.9, reviewCount: 33, description: '고급스러운 프리미엄 소파' }} />
-                <ProductCard product={{ id: 214, name: '디퓨저', price: 22000, image: '/sample14.jpg', freeShipping: true, coupon: false, liked: false, rating: 4.7, reviewCount: 19, description: '은은한 향의 디퓨저' }} />
+                <ProductCard 
+                  product={{ 
+                    id: 213, 
+                    name: '프리미엄 소파', 
+                    price: 650000, 
+                    image: '/sample13.jpg', 
+                    freeShipping: true, 
+                    coupon: true, 
+                    liked: likedProducts.has(213), 
+                    rating: 4.9, 
+                    reviewCount: 33, 
+                    description: '고급스러운 프리미엄 소파' 
+                  }} 
+                  onLike={handleLike}
+                />
+                <ProductCard 
+                  product={{ 
+                    id: 214, 
+                    name: '디퓨저', 
+                    price: 22000, 
+                    image: '/sample14.jpg', 
+                    freeShipping: true, 
+                    coupon: false, 
+                    liked: likedProducts.has(214), 
+                    rating: 4.7, 
+                    reviewCount: 19, 
+                    description: '은은한 향의 디퓨저' 
+                  }} 
+                  onLike={handleLike}
+                />
               </div>
             </div>
           </div>
