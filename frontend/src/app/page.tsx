@@ -13,8 +13,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* 메인 슬라이드 배너 */}
-      <section className="bg-gradient-to-r from-[#14213d] via-[#1a2540] to-mint-400 py-0 h-72">
+      {/* 메인 슬라이드 배너 - 임시 주석처리 */}
+      {/* <section className="bg-gradient-to-r from-[#14213d] via-[#1a2540] to-mint-400 py-0 h-72">
         <div className="max-w-7xl mx-auto px-4 pt-6 pb-8 h-full">
           <Swiper
             spaceBetween={24}
@@ -62,6 +62,52 @@ export default function Home() {
             </SwiperSlide>
           </Swiper>
         </div>
+      </section> */}
+
+      {/* 이벤트/쿠폰/혜택 섹션 */}
+      <section className="max-w-7xl mx-auto px-4 py-8">
+        <h3 className="text-2xl font-bold text-[#14213d] mb-6">이벤트 · 쿠폰 · 혜택</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          <div 
+            className="flex flex-col items-center bg-white rounded-xl shadow p-6 border border-mint-100 cursor-pointer hover:shadow-lg transition-shadow"
+            onClick={() => {
+              console.log('이벤트 카드 클릭: 여름맞이 쿨특가 쿠폰');
+              alert('여름맞이 쿨특가 쿠폰 이벤트 준비 중입니다!');
+            }}
+          >
+            <div className="w-full aspect-[3/2] mb-4 overflow-hidden rounded-lg">
+              <img src="/event-coupon.jpg" alt="쿠폰 이벤트" className="w-full h-full object-cover" />
+            </div>
+            <div className="text-lg font-semibold text-emerald-700 mb-2">여름맞이 쿨특가 쿠폰</div>
+            <div className="text-gray-500 text-sm text-center">여름 상품 10% 할인쿠폰을 지금 받으세요!</div>
+          </div>
+          <div 
+            className="flex flex-col items-center bg-white rounded-xl shadow p-6 border border-mint-100 cursor-pointer hover:shadow-lg transition-shadow"
+            onClick={() => {
+              console.log('이벤트 카드 클릭: 신규회원 웰컴 혜택');
+              alert('신규회원 웰컴 혜택 이벤트 준비 중입니다!');
+            }}
+          >
+            <div className="w-full aspect-[3/2] mb-4 overflow-hidden rounded-lg">
+            <img src="/welcome-coupon.jpg" alt="쿠폰 이벤트" className="w-full h-full object-cover" />
+            </div>
+            <div className="text-lg font-semibold text-emerald-700 mb-2">신규회원 웰컴 혜택</div>
+            <div className="text-gray-500 text-sm text-center">회원가입 시 웰컴쿠폰 즉시 지급!</div>
+          </div>
+          <div 
+            className="flex flex-col items-center bg-white rounded-xl shadow p-6 border border-mint-100 cursor-pointer hover:shadow-lg transition-shadow"
+            onClick={() => {
+              console.log('이벤트 카드 클릭: 타임딜 한정 이벤트');
+              alert('타임딜 한정 이벤트 준비 중입니다!');
+            }}
+          >
+            <div className="w-full aspect-[3/2] mb-4 overflow-hidden rounded-lg">
+            <img src="/time-deal.jpg" alt="쿠폰 이벤트" className="w-full h-full object-cover" />
+            </div>
+            <div className="text-lg font-semibold text-emerald-700 mb-2">타임딜 한정 이벤트</div>
+            <div className="text-gray-500 text-sm text-center">타임딜 상품 전용 5% 쿠폰을 확인하세요!</div>
+          </div>
+        </div>
       </section>
 
       {/* 오늘의 특가(타임딜) 섹션 */}
@@ -99,52 +145,6 @@ export default function Home() {
               onLike={handleLike}
             />
           ))}
-        </div>
-      </section>
-
-      {/* 이벤트/쿠폰/혜택 섹션 */}
-      <section className="max-w-7xl mx-auto px-4 py-8">
-        <h3 className="text-2xl font-bold text-[#14213d] mb-6">이벤트 · 쿠폰 · 혜택</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          <div 
-            className="flex flex-col items-center bg-white rounded-xl shadow p-6 border border-mint-100 cursor-pointer hover:shadow-lg transition-shadow"
-            onClick={() => {
-              console.log('이벤트 카드 클릭: 여름맞이 쿨특가 쿠폰');
-              alert('여름맞이 쿨특가 쿠폰 이벤트 준비 중입니다!');
-            }}
-          >
-            <div className="w-full aspect-[3/2] mb-4 overflow-hidden rounded-lg">
-              <img src="/event-coupon.jpg" alt="쿠폰 이벤트" className="w-full h-full object-cover" />
-            </div>
-            <div className="text-lg font-semibold text-emerald-700 mb-2">여름맞이 쿨특가 쿠폰</div>
-            <div className="text-gray-500 text-sm text-center">여름 상품 10% 할인쿠폰을 지금 받으세요!</div>
-          </div>
-          <div 
-            className="flex flex-col items-center bg-white rounded-xl shadow p-6 border border-mint-100 cursor-pointer hover:shadow-lg transition-shadow"
-            onClick={() => {
-              console.log('이벤트 카드 클릭: 신규회원 웰컴 혜택');
-              alert('신규회원 웰컴 혜택 이벤트 준비 중입니다!');
-            }}
-          >
-            <div className="w-full aspect-[3/2] mb-4 overflow-hidden rounded-lg">
-            <img src="/event-coupon.jpg" alt="쿠폰 이벤트" className="w-full h-full object-cover" />
-            </div>
-            <div className="text-lg font-semibold text-emerald-700 mb-2">신규회원 웰컴 혜택</div>
-            <div className="text-gray-500 text-sm text-center">회원가입 시 웰컴쿠폰 즉시 지급!</div>
-          </div>
-          <div 
-            className="flex flex-col items-center bg-white rounded-xl shadow p-6 border border-mint-100 cursor-pointer hover:shadow-lg transition-shadow"
-            onClick={() => {
-              console.log('이벤트 카드 클릭: 타임딜 한정 이벤트');
-              alert('타임딜 한정 이벤트 준비 중입니다!');
-            }}
-          >
-            <div className="w-full aspect-[3/2] mb-4 overflow-hidden rounded-lg">
-            <img src="/event-coupon.jpg" alt="쿠폰 이벤트" className="w-full h-full object-cover" />
-            </div>
-            <div className="text-lg font-semibold text-emerald-700 mb-2">타임딜 한정 이벤트</div>
-            <div className="text-gray-500 text-sm text-center">타임딜 상품 전용 5% 쿠폰을 확인하세요!</div>
-          </div>
         </div>
       </section>
 

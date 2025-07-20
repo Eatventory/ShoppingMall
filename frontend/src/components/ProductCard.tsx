@@ -50,7 +50,7 @@ export default function ProductCard({ product, onLike }: ProductCardProps) {
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-48 object-cover"
+          className="w-full h-48 object-contain p-0"
         />
         {/* 뱃지 영역 */}
         <div className="absolute top-2 left-2 flex flex-col space-y-1 z-10">
