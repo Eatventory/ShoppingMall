@@ -13,8 +13,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* 메인 슬라이드 배너 */}
-      <section className="bg-gradient-to-r from-[#14213d] via-[#1a2540] to-mint-400 py-0 h-72">
+      {/* 메인 슬라이드 배너 - 임시 주석처리 */}
+      {/* <section className="bg-gradient-to-r from-[#14213d] via-[#1a2540] to-mint-400 py-0 h-72">
         <div className="max-w-7xl mx-auto px-4 pt-6 pb-8 h-full">
           <Swiper
             spaceBetween={24}
@@ -62,45 +62,7 @@ export default function Home() {
             </SwiperSlide>
           </Swiper>
         </div>
-      </section>
-
-      {/* 오늘의 특가(타임딜) 섹션 */}
-      <section className="max-w-7xl mx-auto px-4 py-8">
-        <h3 className="text-2xl font-bold text-[#14213d] mb-6">오늘의 특가</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-          {[
-            { id: 1, name: '무선 블루투스 이어폰', price: 89000, originalPrice: 120000, image: '/sample1.jpg', discount: 26, freeShipping: true, coupon: true, liked: true, rating: 4.5, reviewCount: 128, description: '고음질 무선 이어폰, 노이즈 캔슬링 기능' },
-            { id: 3, name: '면 티셔츠', price: 25000, originalPrice: 35000, image: '/sample3.jpg', discount: 29, freeShipping: false, coupon: true, liked: false, rating: 4.7, reviewCount: 156, description: '100% 면 소재의 편안한 티셔츠' },
-            { id: 5, name: '커피머신', price: 250000, originalPrice: 320000, image: '/sample5.jpg', discount: 22, freeShipping: false, coupon: true, liked: false, rating: 4.8, reviewCount: 67, description: '자동 커피머신, 다양한 음료 제조 가능' },
-            { id: 4, name: '운동화', price: 89000, image: '/sample4.jpg', freeShipping: true, coupon: false, liked: true, rating: 4.3, reviewCount: 203, description: '편안한 착용감의 운동화' }
-          ].map((product) => (
-            <ProductCard 
-              key={product.id} 
-              product={product}
-              onLike={handleLike}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* 베스트 상품 섹션 */}
-      <section className="max-w-7xl mx-auto px-4 py-8">
-        <h3 className="text-2xl font-bold text-[#14213d] mb-6">베스트 상품</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-          {[
-            { id: 2, name: '스마트폰 케이스', price: 15000, image: '/sample2.jpg', freeShipping: true, coupon: false, liked: false, rating: 4.2, reviewCount: 89, description: '충격 방지 실리콘 케이스' },
-            { id: 6, name: '요가매트', price: 18000, image: '/sample6.jpg', freeShipping: true, coupon: false, liked: false, rating: 4.1, reviewCount: 94, description: '미끄럼 방지 요가매트' },
-            { id: 5, name: '커피머신', price: 250000, image: '/sample5.jpg', freeShipping: false, coupon: true, liked: false, rating: 4.8, reviewCount: 67, description: '자동 커피머신, 다양한 음료 제조 가능' },
-            { id: 4, name: '운동화', price: 89000, image: '/sample4.jpg', freeShipping: true, coupon: false, liked: true, rating: 4.3, reviewCount: 203, description: '편안한 착용감의 운동화' }
-          ].map((product) => (
-            <ProductCard 
-              key={product.id} 
-              product={product}
-              onLike={handleLike}
-            />
-          ))}
-        </div>
-      </section>
+      </section> */}
 
       {/* 이벤트/쿠폰/혜택 섹션 */}
       <section className="max-w-7xl mx-auto px-4 py-8">
@@ -145,6 +107,44 @@ export default function Home() {
             <div className="text-lg font-semibold text-emerald-700 mb-2">타임딜 한정 이벤트</div>
             <div className="text-gray-500 text-sm text-center">타임딜 상품 전용 5% 쿠폰을 확인하세요!</div>
           </div>
+        </div>
+      </section>
+
+      {/* 오늘의 특가(타임딜) 섹션 */}
+      <section className="max-w-7xl mx-auto px-4 py-8">
+        <h3 className="text-2xl font-bold text-[#14213d] mb-6">오늘의 특가</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          {[
+            { id: 1, name: '무선 블루투스 이어폰', price: 89000, originalPrice: 120000, image: '/sample1.jpg', discount: 26, freeShipping: true, coupon: true, liked: true, rating: 4.5, reviewCount: 128, description: '고음질 무선 이어폰, 노이즈 캔슬링 기능' },
+            { id: 3, name: '면 티셔츠', price: 25000, originalPrice: 35000, image: '/sample3.jpg', discount: 29, freeShipping: false, coupon: true, liked: false, rating: 4.7, reviewCount: 156, description: '100% 면 소재의 편안한 티셔츠' },
+            { id: 5, name: '커피머신', price: 250000, originalPrice: 320000, image: '/sample5.jpg', discount: 22, freeShipping: false, coupon: true, liked: false, rating: 4.8, reviewCount: 67, description: '자동 커피머신, 다양한 음료 제조 가능' },
+            { id: 4, name: '운동화', price: 89000, image: '/sample4.jpg', freeShipping: true, coupon: false, liked: true, rating: 4.3, reviewCount: 203, description: '편안한 착용감의 운동화' }
+          ].map((product) => (
+            <ProductCard 
+              key={product.id} 
+              product={product}
+              onLike={handleLike}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* 베스트 상품 섹션 */}
+      <section className="max-w-7xl mx-auto px-4 py-8">
+        <h3 className="text-2xl font-bold text-[#14213d] mb-6">베스트 상품</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          {[
+            { id: 2, name: '스마트폰 케이스', price: 15000, image: '/sample2.jpg', freeShipping: true, coupon: false, liked: false, rating: 4.2, reviewCount: 89, description: '충격 방지 실리콘 케이스' },
+            { id: 6, name: '요가매트', price: 18000, image: '/sample6.jpg', freeShipping: true, coupon: false, liked: false, rating: 4.1, reviewCount: 94, description: '미끄럼 방지 요가매트' },
+            { id: 5, name: '커피머신', price: 250000, image: '/sample5.jpg', freeShipping: false, coupon: true, liked: false, rating: 4.8, reviewCount: 67, description: '자동 커피머신, 다양한 음료 제조 가능' },
+            { id: 4, name: '운동화', price: 89000, image: '/sample4.jpg', freeShipping: true, coupon: false, liked: true, rating: 4.3, reviewCount: 203, description: '편안한 착용감의 운동화' }
+          ].map((product) => (
+            <ProductCard 
+              key={product.id} 
+              product={product}
+              onLike={handleLike}
+            />
+          ))}
         </div>
       </section>
 
