@@ -16,6 +16,7 @@ export default function ClientScriptInit() {
   return (
     <Script
       src="https://klicklab-sdk.pages.dev/klicklab_sdk.js"
+      data-sdk-key="7ea40a3f-e0eb-475b-a787-2fbbd7f9aa98"
       strategy="afterInteractive"
       onLoad={() => {
         console.log("✅ KlickLab SDK loaded");
