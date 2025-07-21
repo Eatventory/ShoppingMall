@@ -78,7 +78,7 @@ export default function Home() {
             <div className="w-full aspect-[3/2] mb-4 overflow-hidden rounded-lg">
               <img src="/event-coupon.jpg" alt="쿠폰 이벤트" className="w-full h-full object-cover" />
             </div>
-            <div className="text-lg font-semibold text-emerald-700 mb-2">여름맞이 쿨특가 쿠폰</div>
+            <div className="text-lg font-semibold text-emerald-700 mb-2">여름맞이 쿨특가 쿠폰 (7/10~)</div>
             <div className="text-gray-500 text-sm text-center">여름 상품 10% 할인쿠폰을 지금 받으세요!</div>
           </div>
           <div 
@@ -91,7 +91,7 @@ export default function Home() {
             <div className="w-full aspect-[3/2] mb-4 overflow-hidden rounded-lg">
             <img src="/welcome-coupon.jpg" alt="쿠폰 이벤트" className="w-full h-full object-cover" />
             </div>
-            <div className="text-lg font-semibold text-emerald-700 mb-2">신규회원 웰컴 혜택</div>
+            <div className="text-lg font-semibold text-emerald-700 mb-2">신규회원 웰컴 혜택 (7/10~)</div>
             <div className="text-gray-500 text-sm text-center">회원가입 시 웰컴쿠폰 즉시 지급!</div>
           </div>
           <div 
@@ -102,10 +102,10 @@ export default function Home() {
             }}
           >
             <div className="w-full aspect-[3/2] mb-4 overflow-hidden rounded-lg">
-            <img src="/time-deal.jpg" alt="쿠폰 이벤트" className="w-full h-full object-cover" />
+            <img src="/insta-promo.png" alt="쿠폰 이벤트" className="w-full h-full object-cover" />
             </div>
-            <div className="text-lg font-semibold text-emerald-700 mb-2">타임딜 한정 이벤트</div>
-            <div className="text-gray-500 text-sm text-center">타임딜 상품 전용 5% 쿠폰을 확인하세요!</div>
+            <div className="text-lg font-semibold text-emerald-700 mb-2">인스타그램 프로모션 (7/10~)</div>
+            <div className="text-gray-500 text-sm text-center">인스타그램 전용 쿠폰을 확인하세요!</div>
           </div>
         </div>
       </section>
