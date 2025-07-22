@@ -5,7 +5,7 @@ import { CartProvider } from "../contexts/CartContext";
 import { WishlistProvider } from "../contexts/WishlistContext";
 import { OrderProvider } from "../contexts/OrderContext";
 import Navbar from '@/components/Navbar';
-import ClientScriptInit from "./ClientScriptInit";
+// import ClientScriptInit from "./ClientScriptInit";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -33,10 +33,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <script type="module" src="https://klicklab-sdk.pages.dev/klicklab_sdk.js"
-      data-sdk-key="7ea40a3f-e0eb-475b-a787-2fbbd7f9aa98"></script>
-         {/* <ClientScriptInit />  */}
-         {/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-         ------해당 컴포넌트 추가-------- */}
+        data-sdk-key="7ea40a3f-e0eb-475b-a787-2fbbd7f9aa98"></script>
 
         <CartProvider>
           <WishlistProvider>
