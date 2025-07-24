@@ -32,6 +32,7 @@ export default function RootLayout({
         <script 
           src="https://klicklab-sdk.pages.dev/klicklab_sdk.js" 
           data-sdk-key="7ea40a3f-e0eb-475b-a787-2fbbd7f9aa98"
+          data-api-endpoint="http://15.164.169.130:5000/api/analytics/collect"
         />
       </head>
       <body
