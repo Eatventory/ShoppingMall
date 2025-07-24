@@ -40,24 +40,7 @@ export const useWishlist = () => {
 export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([]);
 
-  // 클릭스트림 SDK 자동 추적 비활성화
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.KlickLab) {
-      // 타입 단언을 사용해서 메서드 오버라이드
-      const klickLab = window.KlickLab as any;
-      
-      // getElementPath를 안전하게 오버라이드
-      klickLab.getElementPath = () => '';
-      
-      // 자동 추적 메서드들을 빈 함수로 교체
-      const noop = () => {};
-      klickLab.trackClick = noop;
-      klickLab.autoTrackClick = noop;
-      klickLab.trackEvent = noop;
-      
-      console.log("🚫 KlickLab auto-tracking disabled in WishlistContext");
-    }
-  }, []);
+
 
   // 로컬 스토리지에서 찜한 상품 불러오기
   useEffect(() => {

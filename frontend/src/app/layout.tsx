@@ -28,13 +28,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      
+      <head>
+        <script 
+          src="https://klicklab-sdk.pages.dev/klicklab_sdk.js" 
+          data-sdk-key="7ea40a3f-e0eb-475b-a787-2fbbd7f9aa98"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <script type="module" src="https://klicklab-sdk.pages.dev/klicklab_sdk.js"
-        data-sdk-key="7ea40a3f-e0eb-475b-a787-2fbbd7f9aa98"></script>
-
         <CartProvider>
           <WishlistProvider>
             <OrderProvider>
@@ -43,7 +45,6 @@ export default function RootLayout({
             </OrderProvider>
           </WishlistProvider>
         </CartProvider>
-
       </body>
     </html>
   );

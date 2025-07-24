@@ -116,16 +116,6 @@ export default function WishlistPage() {
                       data-clickstream-ignore="true"
                       onClick={(e) => {
                         e.stopPropagation();
-                        
-                        // 클릭스트림 수동 추적
-                        if (window.KlickLab && window.KlickLab.sendEvent) {
-                          window.KlickLab.sendEvent('wishlist_toggle', {
-                            product_id: product.id,
-                            product_name: product.name,
-                            action: 'remove',
-                            timestamp: Date.now()
-                          });
-                        }
                         handleLike(product.id);
                       }}
                       role="button"
