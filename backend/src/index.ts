@@ -15,7 +15,11 @@ const PORT = process.env.PORT || 5000;
 
 // 미들웨어
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+  origin: [
+    'http://15.164.169.130:3000', 
+    'http://localhost:3000',
+    'https://15.164.169.130:3000'  // HTTPS도 대비
+  ],
   credentials: true
 }));
 app.use(express.json());
