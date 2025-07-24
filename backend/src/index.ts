@@ -1,3 +1,4 @@
+import analyticsRoutes from './routes/analytics';
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -24,6 +25,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
+// 추가
+app.use('/api/analytics', analyticsRoutes);
 
 // 기본 라우트
 app.get('/', (req, res) => {

@@ -13,6 +13,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
+
       {/* 메인 슬라이드 배너 - 임시 주석처리 */}
       {/* <section className="bg-gradient-to-r from-[#14213d] via-[#1a2540] to-mint-400 py-0 h-72">
         <div className="max-w-7xl mx-auto px-4 pt-6 pb-8 h-full">
@@ -97,8 +98,8 @@ export default function Home() {
           <div 
             className="flex flex-col items-center bg-white rounded-xl shadow p-6 border border-mint-100 cursor-pointer hover:shadow-lg transition-shadow"
             onClick={() => {
-              console.log('이벤트 카드 클릭: 타임딜 한정 이벤트');
-              alert('타임딜 한정 이벤트 준비 중입니다!');
+              console.log('이벤트 카드 클릭: 인스타그램 프로모션');
+              alert('인스타그램 프로모션 이벤트 준비 중입니다!');
             }}
           >
             <div className="w-full aspect-[3/2] mb-4 overflow-hidden rounded-lg">

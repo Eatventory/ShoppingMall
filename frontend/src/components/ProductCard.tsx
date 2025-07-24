@@ -1,10 +1,7 @@
-import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
-import { BsCartPlus } from 'react-icons/bs';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+'use client';
 import { useState } from 'react';
 import { useWishlist } from '../contexts/WishlistContext';
-import { useCart } from '../contexts/CartContext';
+import { useRouter } from 'next/navigation';
 
 export interface ProductCardProps {
   product: {
@@ -28,8 +25,6 @@ export interface ProductCardProps {
 export default function ProductCard({ product, onLike }: ProductCardProps) {
   const router = useRouter();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
-  const { addToCart } = useCart();
-  const [showCartSuccess, setShowCartSuccess] = useState(false);
 
   const handleProductClick = (e: React.MouseEvent) => {
     // 찜하기 버튼이나 장바구니 버튼 클릭 시에는 상품 상세로 이동하지 않음
@@ -47,9 +42,9 @@ export default function ProductCard({ product, onLike }: ProductCardProps) {
       onClick={handleProductClick}
     >
       <div className="relative">
-        <img
-          src={product.image}
-          alt={product.name}
+        <img 
+          src={product.image} 
+          alt={product.name} 
           className="w-full h-48 object-contain p-0"
         />
         {/* 뱃지 영역 */}
@@ -73,16 +68,6 @@ export default function ProductCard({ product, onLike }: ProductCardProps) {
           data-clickstream-ignore="true"
           onClick={(e) => {
             e.stopPropagation();
-            
-            // 클릭스트림 수동 추적
-            if (window.KlickLab && window.KlickLab.sendEvent) {
-              window.KlickLab.sendEvent('wishlist_toggle', {
-                product_id: product.id,
-                product_name: product.name,
-                action: isInWishlist(product.id) ? 'remove' : 'add',
-                timestamp: Date.now()
-              });
-            }
             
             if (isInWishlist(product.id)) {
               removeFromWishlist(product.id);
@@ -160,66 +145,8 @@ export default function ProductCard({ product, onLike }: ProductCardProps) {
               {product.price.toLocaleString()}원
             </span>
           </div>
-          <button 
-            className="px-4 py-2 bg-white border border-gray-300 text-mint-400 rounded-md hover:bg-mint-400 hover:text-white transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center"
-            onClick={(e) => {
-              e.stopPropagation();
-              addToCart({
-                id: product.id,
-                name: product.name,
-                price: product.price,
-                originalPrice: product.originalPrice,
-                image: product.image,
-                discount: product.discount
-              });
-              setShowCartSuccess(true);
-            }}
-            aria-label="장바구니에 추가"
-          >
-            <BsCartPlus className="w-5 h-5" />
-          </button>
         </div>
       </div>
-
-      {/* 장바구니 추가 성공 팝업 */}
-      {showCartSuccess && (
-        <div 
-          className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4 text-center">
-            <div className="mb-4">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">장바구니에 추가되었습니다!</h3>
-              <p className="text-sm text-gray-600">
-                {product.name}
-              </p>
-            </div>
-            <div className="flex space-x-3">
-              <button
-                onClick={() => setShowCartSuccess(false)}
-                className="flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-md text-sm font-medium hover:bg-gray-300 transition-colors"
-              >
-                계속 쇼핑
-              </button>
-              <Link
-                href="/cart"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowCartSuccess(false);
-                }}
-                className="flex-1 bg-[#14213d] text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-[#1a2540] transition-colors"
-              >
-                장바구니 보기
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 } 
