@@ -42,21 +42,25 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
 
 
-  // 로컬 스토리지에서 찜한 상품 불러오기
+  // 로컬 스토리지에서 찜한 상품 불러오기 (hydration 문제 해결)
   useEffect(() => {
-    const savedWishlist = localStorage.getItem('wishlist');
-    if (savedWishlist) {
-      try {
-        setWishlistItems(JSON.parse(savedWishlist));
-      } catch (error) {
-        console.error('Failed to parse wishlist from localStorage:', error);
+    if (typeof window !== 'undefined') {
+      const savedWishlist = localStorage.getItem('wishlist');
+      if (savedWishlist) {
+        try {
+          setWishlistItems(JSON.parse(savedWishlist));
+        } catch (error) {
+          console.error('Failed to parse wishlist from localStorage:', error);
+        }
       }
     }
   }, []);
 
-  // 찜한 상품이 변경될 때마다 로컬 스토리지에 저장
+  // 찜한 상품이 변경될 때마다 로컬 스토리지에 저장 (hydration 문제 해결)
   useEffect(() => {
-    localStorage.setItem('wishlist', JSON.stringify(wishlistItems));
+    if (typeof window !== 'undefined' && wishlistItems.length > 0) {
+      localStorage.setItem('wishlist', JSON.stringify(wishlistItems));
+    }
   }, [wishlistItems]);
 
   const addToWishlist = (item: WishlistItem) => {

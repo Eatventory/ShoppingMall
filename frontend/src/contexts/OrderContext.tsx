@@ -31,21 +31,25 @@ const OrderContext = createContext<OrderContextType | undefined>(undefined);
 export function OrderProvider({ children }: { children: React.ReactNode }) {
   const [orders, setOrders] = useState<Order[]>([]);
 
-  // 로컬 스토리지에서 주문 데이터 로드
+  // 로컬 스토리지에서 주문 데이터 로드 (hydration 문제 해결)
   useEffect(() => {
-    const savedOrders = localStorage.getItem('jungle_shop_orders');
-    if (savedOrders) {
-      try {
-        setOrders(JSON.parse(savedOrders));
-      } catch (error) {
-        console.error('주문 데이터 로드 실패:', error);
+    if (typeof window !== 'undefined') {
+      const savedOrders = localStorage.getItem('jungle_shop_orders');
+      if (savedOrders) {
+        try {
+          setOrders(JSON.parse(savedOrders));
+        } catch (error) {
+          console.error('주문 데이터 로드 실패:', error);
+        }
       }
     }
   }, []);
 
-  // 주문 데이터를 로컬 스토리지에 저장
+  // 주문 데이터를 로컬 스토리지에 저장 (hydration 문제 해결)
   const saveOrders = (newOrders: Order[]) => {
-    localStorage.setItem('jungle_shop_orders', JSON.stringify(newOrders));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('jungle_shop_orders', JSON.stringify(newOrders));
+    }
   };
 
   // 새 주문 추가

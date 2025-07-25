@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -5,6 +6,7 @@ import { CartProvider } from "../contexts/CartContext";
 import { WishlistProvider } from "../contexts/WishlistContext";
 import { OrderProvider } from "../contexts/OrderContext";
 import Navbar from '@/components/Navbar';
+import Script from 'next/script';
 // import ClientScriptInit from "./ClientScriptInit";
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,18 +28,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <head>
-        <script 
-          src="https://klicklab-sdk.pages.dev/klicklab_sdk.js" 
-          data-sdk-key="7ea40a3f-e0eb-475b-a787-2fbbd7f9aa98"
-          data-api-endpoint="http://15.164.169.130:5000/api/analytics/collect"
-        />
+        {/* 여기에 직접 script 태그 삽입 */}
+        <script
+          src="https://klicklab-sdk.pages.dev/klicklab_sdk.js"
+          data-sdk-key="f2719562-c64d-4175-aa3e-b66caad59d79"
+        ></script>
+       
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+
         <CartProvider>
           <WishlistProvider>
             <OrderProvider>
@@ -46,6 +51,7 @@ export default function RootLayout({
             </OrderProvider>
           </WishlistProvider>
         </CartProvider>
+
       </body>
     </html>
   );

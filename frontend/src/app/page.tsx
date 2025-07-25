@@ -1,15 +1,18 @@
 'use client';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import ProductCard from '../components/ProductCard';
 
+
 export default function Home() {
+
   const handleLike = (productId: number) => {
     // WishlistContext에서 자동으로 처리됨
   };
+
 
   return (
     <div className="min-h-screen bg-white">
