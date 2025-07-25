@@ -1,87 +1,19 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
-
-interface CartItem {
-  id: number;
-  name: string;
-  price: number;
-  originalPrice?: number;
-  image: string;
-  quantity: number;
-  discount?: number;
-}
+import { useRouter } from 'next/navigation';
+import { useCart } from '../../contexts/CartContext';
 
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: 1,
-      name: "무선 블루투스 이어폰",
-      price: 89000,
-      originalPrice: 120000,
-      image: "/sample1.jpg",
-      quantity: 1,
-      discount: 26
-    },
-    {
-      id: 2,
-      name: "면 티셔츠",
-      price: 25000,
-      originalPrice: 35000,
-      image: "/sample3.jpg",
-      quantity: 2,
-      discount: 29
-    },
-    {
-      id: 3,
-      name: "스마트폰 케이스",
-      price: 15000,
-      image: "/sample2.jpg",
-      quantity: 1
-    }
-  ]);
+  const router = useRouter();
+  const { cartItems, updateQuantity, removeFromCart, getCartTotal, clearCart } = useCart();
 
-  const updateQuantity = (id: number, newQuantity: number) => {
-    if (newQuantity < 1) return;
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
-
-  const removeItem = (id: number) => {
-    setCartItems(items => items.filter(item => item.id !== id));
-  };
-
-  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const totalDiscount = cartItems.reduce((sum, item) => {
-    if (item.originalPrice) {
-      return sum + ((item.originalPrice - item.price) * item.quantity);
-    }
-    return sum;
-  }, 0);
+  const subtotal = getCartTotal();
   const shippingFee = subtotal > 50000 ? 0 : 3000;
   const total = subtotal + shippingFee;
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* 헤더 */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-gray-900">쇼핑몰</Link>
-            </div>
-            <nav className="flex space-x-8">
-              <Link href="/products" className="text-gray-500 hover:text-gray-900">상품</Link>
-              <Link href="/cart" className="text-indigo-600 font-medium">장바구니</Link>
-              <Link href="/login" className="text-gray-500 hover:text-gray-900">로그인</Link>
-            </nav>
-          </div>
-        </div>
-      </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start">
@@ -155,7 +87,7 @@ export default function CartPage() {
                           {(item.price * item.quantity).toLocaleString()}원
                         </div>
                         <button
-                          onClick={() => removeItem(item.id)}
+                          onClick={() => removeFromCart(item.id)}
                           className="text-sm text-red-500 hover:text-red-700 mt-1"
                         >
                           삭제
@@ -179,12 +111,7 @@ export default function CartPage() {
                   <span className="font-medium">{subtotal.toLocaleString()}원</span>
                 </div>
                 
-                {totalDiscount > 0 && (
-                  <div className="flex justify-between text-green-600">
-                    <span>할인 금액</span>
-                    <span>-{totalDiscount.toLocaleString()}원</span>
-                  </div>
-                )}
+
                 
                 <div className="flex justify-between">
                   <span className="text-gray-600">배송비</span>
@@ -203,7 +130,10 @@ export default function CartPage() {
 
               {cartItems.length > 0 && (
                 <>
-                  <button className="w-full bg-indigo-600 text-white py-3 px-4 rounded-md font-medium hover:bg-indigo-700 transition-colors mt-6">
+                  <button 
+                    onClick={() => router.push('/checkout')}
+                    className="w-full bg-indigo-600 text-white py-3 px-4 rounded-md font-medium hover:bg-indigo-700 transition-colors mt-6"
+                  >
                     주문하기
                   </button>
                   

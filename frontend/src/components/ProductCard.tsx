@@ -1,5 +1,7 @@
-import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
-import Link from 'next/link';
+'use client';
+import { useState } from 'react';
+import { useWishlist } from '../contexts/WishlistContext';
+import { useRouter } from 'next/navigation';
 
 export interface ProductCardProps {
   product: {
@@ -21,13 +23,29 @@ export interface ProductCardProps {
 }
 
 export default function ProductCard({ product, onLike }: ProductCardProps) {
+  const router = useRouter();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+
+  const handleProductClick = (e: React.MouseEvent) => {
+    // 찜하기 버튼이나 장바구니 버튼 클릭 시에는 상품 상세로 이동하지 않음
+    if ((e.target as HTMLElement).closest('button')) {
+      return;
+    }
+    
+    // 상품 상세 페이지로 이동
+    router.push(`/products/${product.id}`);
+  };
+
   return (
-    <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow border border-mint-100 relative">
+    <div 
+      className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow border border-mint-100 relative cursor-pointer"
+      onClick={handleProductClick}
+    >
       <div className="relative">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-48 object-cover"
+        <img 
+          src={product.image} 
+          alt={product.name} 
+          className="w-full h-48 object-contain p-0"
         />
         {/* 뱃지 영역 */}
         <div className="absolute top-2 left-2 flex flex-col space-y-1 z-10">
@@ -35,32 +53,22 @@ export default function ProductCard({ product, onLike }: ProductCardProps) {
             <span className="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md border border-red-800 mb-1">{product.discount}% 할인</span>
           )}
           {product.freeShipping && (
-            <span className="bg-[#14213d] text-mint-200 text-xs font-bold px-2 py-1 rounded shadow-md border border-mint-400 mb-1">무료배송</span>
+            <span className="bg-[#14213d] text-white text-xs font-bold px-2 py-1 rounded shadow-md border border-mint-400 mb-1">무료배송</span>
           )}
           {product.coupon && (
             <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md border border-emerald-800">쿠폰</span>
           )}
         </div>
         {/* 찜하기 하트 */}
-<<<<<<< Updated upstream
-        {onLike && (
-          <button
-            className="absolute top-2 right-2 z-10 p-1 bg-white/80 rounded-full shadow-md border border-mint-200 hover:scale-110 transition"
-            onClick={() => onLike(product.id)}
-            aria-label="찜하기"
-          >
-            {product.liked ? (
-              <AiFillHeart className="text-mint-400 w-8 h-8 drop-shadow" />
-            ) : (
-              <AiOutlineHeart className="text-gray-300 w-8 h-8 drop-shadow hover:text-mint-400 transition" />
-            )}
-          </button>
-        )}
-=======
-        <button
-          className="absolute top-2 right-2 z-10 p-1 bg-white/80 rounded-full shadow-md border border-mint-200 hover:scale-110 transition"
+        <div 
+          className="absolute top-2 right-2 z-10 p-1 bg-white/80 rounded-full shadow-md border border-mint-200 hover:scale-110 transition cursor-pointer"
+          data-wishlist-button="true"
+          data-product-id={product.id}
+          data-product-name={product.name}
+          data-clickstream-ignore="true"
           onClick={(e) => {
             e.stopPropagation();
+            
             if (isInWishlist(product.id)) {
               removeFromWishlist(product.id);
             } else {
@@ -81,15 +89,22 @@ export default function ProductCard({ product, onLike }: ProductCardProps) {
             }
             if (onLike) onLike(product.id);
           }}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              e.currentTarget.click();
+            }
+          }}
           aria-label="찜하기"
         >
           {isInWishlist(product.id) ? (
-            <AiFillHeart className="text-red-400 w-8 h-8 drop-shadow" />
+            <div className="text-red-400 w-8 h-8 drop-shadow flex items-center justify-center text-2xl font-bold">♥</div>
           ) : (
-            <AiOutlineHeart className="text-gray-300 w-8 h-8 drop-shadow hover:text-red-400 transition" />
+            <div className="text-gray-300 w-8 h-8 drop-shadow hover:text-red-400 transition flex items-center justify-center text-2xl font-bold">♡</div>
           )}
-        </button>
->>>>>>> Stashed changes
+        </div>
       </div>
       <div className="p-4">
         <h3 className="text-lg font-medium text-gray-900 mb-2">{product.name}</h3>
@@ -130,9 +145,6 @@ export default function ProductCard({ product, onLike }: ProductCardProps) {
               {product.price.toLocaleString()}원
             </span>
           </div>
-          <button className="bg-mint-400 text-[#14213d] px-4 py-2 rounded-md text-sm font-medium hover:bg-mint-300 transition-colors">
-            장바구니
-          </button>
         </div>
       </div>
     </div>

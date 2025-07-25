@@ -1,3 +1,4 @@
+import analyticsRoutes from './routes/analytics';
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -14,7 +15,11 @@ const PORT = process.env.PORT || 5000;
 
 // 미들웨어
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+  origin: [
+    'http://15.164.169.130:3000', 
+    'http://localhost:3000',
+    'https://15.164.169.130:3000'  // HTTPS도 대비
+  ],
   credentials: true
 }));
 app.use(express.json());
@@ -24,6 +29,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
+// 추가
+app.use('/api/analytics', analyticsRoutes);
 
 // 기본 라우트
 app.get('/', (req, res) => {
